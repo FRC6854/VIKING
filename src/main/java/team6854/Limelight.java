@@ -117,8 +117,6 @@ public class Limelight {
      * @return the distance to the target in inches (estimation)
      */
     public double getDistanceFromTarget() {
-      //double vertFOV = 49.7;
-      //return 120/(Math.tan(Math.toRadians(vertFOV))*targetY())*4;
   
       double tapeHeight = 3; //inches
       double limelightHeight = 2; //inches
@@ -131,7 +129,6 @@ public class Limelight {
      * @return
      */
     public double getHorzAngle() {
-      // isn't the "X angle to the target" just targetX()?
       double horzFOV = 59.6;
       return Math.atan(Math.tan(Math.toRadians(horzFOV))*targetX()/160);
     }

@@ -32,6 +32,11 @@ Arduino Serial connection wrapper for LEDs, Date/Time formatter, and DriverStati
 
 A custom PID Controller for closed-loop control on FRC robots. Probably will be deprecated in 2020 due to WPILib planning to add better PID Controller to their code.
 
+### Swerve Wheel Drive
+`team6854.controllers.SwerveWheelDrive`
+
+Modular speed controller for our swerve robot since we don't have enough of one motor controller.
+
 ### VikingSPX
 `team6854.controllers.VikingSPX`
 
