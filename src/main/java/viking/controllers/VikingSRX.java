@@ -1,4 +1,4 @@
-package team6854.controllers;
+package viking.controllers;
 
 import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
 import com.ctre.phoenix.motion.TrajectoryPoint;
@@ -15,6 +15,20 @@ public class VikingSRX {
     private double metersPerRevolution = 0;
 
     /**
+     * Constructor for VikingSRX without encoder
+     * @param id the CAN ID for the Talon SRX
+     * @param inverted is the motor inverted
+     */
+    public VikingSRX(int id, boolean inverted) {
+        this.motor = new TalonSRX(id);
+
+        motor.configFactoryDefault();
+
+        motor.setInverted(inverted);
+    }
+
+    /**
+     * Full constructor for VikingSRX
      * @param id the CAN ID for the Talon SRX
      * @param inverted is the motor inverted
      * @param sensorPhase should the encoder be inverted

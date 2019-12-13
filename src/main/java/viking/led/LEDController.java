@@ -1,8 +1,8 @@
-package team6854.led;
+package viking.led;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import team6854.OI;
+import viking.OI;
 
 public class LEDController extends Subsystem implements LEDMappings {
     private static LEDController instance;

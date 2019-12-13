@@ -8,52 +8,52 @@ The JitPack is based off of FRC 1540s library ROOSTER and you can go check it ou
 ## What's Included in VIKING
 
 ### Controller
-`team6854.Controller`
+`viking.Controller`
 
 Includes support for X-Box One Controller for driving.
 
 ### CSV File Manager
-`team6854.CSVFileManager`
+`viking.CSVFileManager`
 
 Read paths from CSV files and also create logs in CSV format for debugging.
 
 ### Limelight
-`team6854.Limelight`
+`viking.Limelight`
 
 A wrapper for the Limelight using NetworkTables.
 
 ### OI
-`team6854.OI`
+`viking.OI`
 
 Arduino Serial connection wrapper for LEDs, Date/Time formatter, and DriverStation code.
 
 ### PID Controller
-`team6854.controllers.PIDController`
+`viking.controllers.PIDController`
 
 A custom PID Controller for closed-loop control on FRC robots. Probably will be deprecated in 2020 due to WPILib planning to add better PID Controller to their code.
 
 ### Swerve Wheel Drive
-`team6854.controllers.SwerveWheelDrive`
+`viking.controllers.SwerveWheelDrive`
 
 Modular speed controller for our swerve robot since we don't have enough of one motor controller.
 
 ### VikingSPX
-`team6854.controllers.VikingSPX`
+`viking.controllers.VikingSPX`
 
 Wrapper for VictorSPX from CTRE. Includes easy to use controls + ability to follow master controllers.
 
 ### VikingSRX
-`team6854.controllers.VikingSPX`
+`viking.controllers.VikingSPX`
 
 Wrapper for TalonSRX from CTRE. Includes easy to use controls + closed-loop control + motion profiling.
 
 ### LED Controller
-`team6854.led.LEDController`
+`viking.led.LEDController`
 
 Controls current LED mode.
 
 ### LED Mappings
-`team6854.led.LEDMappings`
+`viking.led.LEDMappings`
 
 LED codes for certain patterns on the Arduino side code e.g. `a` means Red Full Colour.
 

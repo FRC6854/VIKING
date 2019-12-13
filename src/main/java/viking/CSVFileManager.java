@@ -1,4 +1,4 @@
-package team6854;
+package viking;
 
 import java.io.FileReader;
 import java.io.FileWriter;

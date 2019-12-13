@@ -1,4 +1,4 @@
-package team6854.led;
+package viking.led;
 
 public interface LEDMappings {
     final char TELEOP = 'a';
