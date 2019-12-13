@@ -69,7 +69,7 @@ repositories {
 
 dependencies {
     // other dependencies
-    implementation 'com.github.FRC6854:VIKING:master-SNAPSHOT'
+    implementation 'com.github.FRC6854:VIKING:<latest-release-tag>'
 }
 ```
 
