@@ -57,6 +57,11 @@ Controls current LED mode.
 
 LED codes for certain patterns on the Arduino side code e.g. `a` means Red Full Colour.
 
+### Math
+`viking.math`
+
+Full of math functions for swerve and other things.
+
 ## Installation
 
 Add the library by adding these lines in your `build.gradle` file:
