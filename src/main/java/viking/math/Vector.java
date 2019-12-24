@@ -16,27 +16,27 @@ public class Vector {
         x = vec.x;
         y = vec.y;
     }
-
-    public Vector(float dir, float mag){
-        direction = dir;
-        magnitude = mag;
-        x = genmath.findx(direction, magnitude);
-        y = genmath.findy(direction, magnitude);
-    }
-
-    public Vector(double Vx, double Vy){
-        x = Vx;
-        y = Vy;
-        direction = vectorDir(x, y);
-        magnitude = genmath.hyplength(x, y);
-    }
+    
+    public Vector(double dir_x, double mag_y, boolean cartesian){
+        if (cartesian == false) {
+            direction = dir_x;
+            magnitude = mag_y;
+            x = genmath.findx(direction, magnitude);
+            y = genmath.findy(direction, magnitude);
+        }
+        else {
+            x = dir_x;
+            y = mag_y;
+            direction = vectorDir(x, y);
+            magnitude = genmath.hyplength(x, y);
+        }}
 
     private double vectorDir(double x, double y){
         //"Normalizes" y by setting it to be within the boundaries of a unit circle
-        double y1 = (y*(1/genmath.hyplength(x,y))); 
+        y = (y*(1/genmath.hyplength(x,y))); 
     
         // angle of the point (0-360)
-        double deg0 = Math.floor((Math.toDegrees(Math.acos(-y1)))*100)/100; // acos
+        double deg0 = Math.floor((Math.toDegrees(Math.acos(y)))*100)/100; // acos
         double deg1 = Math.floor((((360 - deg0) % 360))*100)/100; // phase shift
     
         //decides angle based on x value
@@ -48,13 +48,13 @@ public class Vector {
         double Vx = x + vec2.x;
         double Vy = y + vec2.y;
 
-        return new Vector(Vx, Vy);
+        return new Vector(Vx, Vy, true);
     }
     public Vector subtract(Vector vec2){
         double Vx = x - vec2.x;
         double Vy = y - vec2.y;
 
-        return new Vector(Vx, Vy);
+        return new Vector(Vx, Vy, true);
     }
 
 }
