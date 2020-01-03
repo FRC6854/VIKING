@@ -1,10 +1,9 @@
 package viking;
 
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.DriverStation;
 
