@@ -1,10 +1,10 @@
 package viking.led;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import viking.OI;
 
-public class LEDController extends Subsystem implements LEDMappings {
+public class LEDController extends SubsystemBase implements LEDMappings {
     private static LEDController instance;
     private static OI oi;
 
@@ -103,10 +103,5 @@ public class LEDController extends Subsystem implements LEDMappings {
         if (instance == null)
           instance = new LEDController();
         return instance;
-    }
-
-    @Override
-    protected void initDefaultCommand() {
-        
     }
 }
