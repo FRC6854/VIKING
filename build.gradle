@@ -5,10 +5,9 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "2020.1.2"
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
-
 group = 'com.github.FRC6854'
+
+def ROBOT_MAIN_CLASS = "frc.robot.Main"
 
 // Maven central needed for JUnit
 repositories {
@@ -29,20 +28,6 @@ dependencies {
     implementation wpi.deps.vendor.java()
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
-}
-
-deploy {
-    targets {
-        roboRIO("roborio") {
-            team = frc.getTeamOrDefault(6854)
-        }
-    }
-    artifacts {
-        frcJavaArtifact('frcJava') {
-            targets << "roborio"
-            debug = project.hasProperty("deploy-debug")
-        }
-    }
 }
 
 // To specify a license in the pom:
@@ -70,4 +55,5 @@ wrapper {
 // knows where to look for our Robot Class.
 jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
