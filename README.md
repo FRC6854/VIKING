@@ -1,5 +1,5 @@
 # VIKING
-[![](https://jitpack.io/v/FRC6854/VIKING.svg)](https://jitpack.io/#FRC6854/VIKING)
+[![](https://jitpack.io/v/FRC6854/VIKING.svg)](https://jitpack.io/#FRC6854/VIKING) [![Build Status](https://dev.azure.com/tntcommando10064/VIKING/_apis/build/status/FRC6854.VIKING?branchName=master)](https://dev.azure.com/tntcommando10064/VIKING/_build/latest?definitionId=1&branchName=master)
 
 Reusable Systems for Robots
 A common library of useful classes and systems intended to be used for all Team 6854 robots
