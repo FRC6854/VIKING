@@ -10,8 +10,6 @@ targetCompatibility = JavaVersion.VERSION_11
 
 group = 'com.github.FRC6854'
 
-def ROBOT_MAIN_CLASS = "frc.robot.Main"
-
 // Maven central needed for JUnit
 repositories {
     mavenCentral()
@@ -58,5 +56,4 @@ wrapper {
 // knows where to look for our Robot Class.
 jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
 }
