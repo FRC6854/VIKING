@@ -1,4 +1,4 @@
-package viking.controllers;
+package viking.controllers.ctre;
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
