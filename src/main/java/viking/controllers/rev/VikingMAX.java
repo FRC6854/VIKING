@@ -15,7 +15,6 @@ public class VikingMAX {
     /**
      * @param id the CAN ID for the Spark MAX
      * @param inverted is the motor inverted
-     * @param encoderInvert is the encoder inverted
      * @param kF
      * @param kP
      * @param kI
@@ -23,7 +22,7 @@ public class VikingMAX {
      * @param velocity max velocity for smart motion
      * @param acceleration max acceleration for smart motion
      */
-    public VikingMAX(int id, boolean inverted, boolean encoderInvert,
+    public VikingMAX(int id, boolean inverted,
                             double kF, double kP, double kI, 
                             double kD, double velocity, double acceleration) {
 
@@ -36,8 +35,6 @@ public class VikingMAX {
         pidController = motor.getPIDController();
         encoder = motor.getEncoder();
 
-        encoder.setInverted(encoderInvert);
-
         pidController.setOutputRange(-1, 1);
         
         setPIDF(kP, kI, kD, kF);
@@ -47,9 +44,8 @@ public class VikingMAX {
     /**
      * @param id the CAN ID for the Spark MAX
      * @param inverted is the motor inverted
-     * @param encoderInvert is the encoder inverted
      */
-    public VikingMAX(int id, boolean inverted, boolean encoderInvert) {
+    public VikingMAX(int id, boolean inverted) {
         motor = new CANSparkMax(id, MotorType.kBrushless);
 
         motor.restoreFactoryDefaults();
@@ -58,8 +54,6 @@ public class VikingMAX {
 
         pidController = motor.getPIDController();
         encoder = motor.getEncoder();
-
-        encoder.setInverted(encoderInvert);
 
         pidController.setOutputRange(-1, 1);
     }
