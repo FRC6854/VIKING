@@ -8,14 +8,46 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class VikingMAX {
 
-    private CANSparkMax motor;
-    private CANPIDController pidController;
-    private CANEncoder encoder;
-    public double kP, kI, kD, kFF, kMaxOutput, kMinOutput, maxRPM, maxVel, maxAcc, allowedErr;
+    private CANSparkMax motor = null;
+    private CANPIDController pidController = null;
+    private CANEncoder encoder = null;
 
     /**
-     * @param id the CAN ID for the Victor SPX
+     * @param id the CAN ID for the Spark MAX
      * @param inverted is the motor inverted
+     * @param encoderInvert is the encoder inverted
+     * @param kF
+     * @param kP
+     * @param kI
+     * @param kD
+     * @param velocity max velocity for smart motion
+     * @param acceleration max acceleration for smart motion
+     */
+    public VikingMAX(int id, boolean inverted, boolean encoderInvert,
+                            double kF, double kP, double kI, 
+                            double kD, double velocity, double acceleration) {
+
+        motor = new CANSparkMax(id, MotorType.kBrushless);
+
+        motor.restoreFactoryDefaults();
+
+        motor.setInverted(inverted);
+
+        pidController = motor.getPIDController();
+        encoder = motor.getEncoder();
+
+        encoder.setInverted(encoderInvert);
+
+        pidController.setOutputRange(-1, 1);
+        
+        setPIDF(kP, kI, kD, kF);
+        setSmartMotion(velocity, acceleration);
+    }
+
+    /**
+     * @param id the CAN ID for the Spark MAX
+     * @param inverted is the motor inverted
+     * @param encoderInvert is the encoder inverted
      */
     public VikingMAX(int id, boolean inverted, boolean encoderInvert) {
         motor = new CANSparkMax(id, MotorType.kBrushless);
@@ -29,32 +61,12 @@ public class VikingMAX {
 
         encoder.setInverted(encoderInvert);
 
-        // PID coefficients
-        kP = 0.00005; 
-        kI = 0.000006;
-        kD = 0;
-        kFF = 0.000156; 
-        kMaxOutput = 1; 
-        kMinOutput = -1;
-
-        // Smart Motion Coefficients
-        maxVel = 2000; // rpm
-        maxAcc = 1500;
-
-        pidController.setP(kP);
-        pidController.setI(kI);
-        pidController.setD(kD);
-        pidController.setFF(kFF);
-        pidController.setOutputRange(kMinOutput, kMaxOutput);
-
-        pidController.setSmartMotionMaxVelocity(maxVel, 0);
-        pidController.setSmartMotionMinOutputVelocity(0, 0);
-        pidController.setSmartMotionMaxAccel(maxAcc, 0);
+        pidController.setOutputRange(-1, 1);
     }
 
     public void setSmartMotion(double maxVelocity, double maxAcceleration) {
-        pidController.setSmartMotionMaxVelocity(maxVel, 0);
-        pidController.setSmartMotionMaxAccel(maxAcc, 0);
+        pidController.setSmartMotionMaxVelocity(maxVelocity, 0);
+        pidController.setSmartMotionMaxAccel(maxAcceleration, 0);
     }
 
     public void setPIDF(double p, double i, double d, double f) {
@@ -68,11 +80,19 @@ public class VikingMAX {
         motor.set(value);
     }
 
-    public void positionControl(double ticks) {
+    public void smartPositionControl(double ticks) {
         pidController.setReference(ticks, ControlType.kSmartMotion);
     }
 
-    public void velocityControl(int velocity) {
+    public void smartVelocityControl(double velocity) {
+        pidController.setReference(velocity, ControlType.kSmartVelocity);
+    }
+
+    public void positionControl(double ticks) {
+        pidController.setReference(ticks, ControlType.kPosition);
+    }
+
+    public void velocityControl(double velocity) {
         pidController.setReference(velocity, ControlType.kVelocity);
     }
 
@@ -86,6 +106,18 @@ public class VikingMAX {
 
     public double getVelocity() {
         return encoder.getVelocity();
+    }
+
+    public double getCountsPerRevolution() {
+        return encoder.getCountsPerRevolution();
+    }
+
+    public void setEncoderPosition(double value) {
+        encoder.setPosition(value);
+    }
+
+    public void zeroEncoder() {
+        encoder.setPosition(0);
     }
 
     public CANSparkMax getSparkMAX() {

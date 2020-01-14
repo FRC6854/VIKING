@@ -1,4 +1,4 @@
-package viking;
+package viking.controllers.rev;
 
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
