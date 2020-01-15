@@ -85,31 +85,8 @@ public class VikingSRX {
         motor.setSelectedSensorPosition(0);
     }
 
-    public void initMotionBuffer(Double[][] profile, int totalCnt) {
-        TrajectoryPoint point = new TrajectoryPoint(); // temp for for loop, since unused params are initialized
-                                                    // automatically, you can alloc just one
-
-        /* Insert every point into buffer, no limit on size */
-        for (int i = 0; i < totalCnt; ++i) {
-
-            double positionRot = profile[i][0] * (1 / metersPerRevolution);
-            double velocityRPM = profile[i][1] * (1 / metersPerRevolution);
-            int durationMilliseconds = profile[i][2].intValue();
-
-            /* for each point, fill our structure and pass it to API */
-            point.timeDur = durationMilliseconds;
-            point.position = positionRot * 4096; // Convert Revolutions to
-                                                            // Units
-            point.velocity = velocityRPM * 4096 / 600.0; // Convert RPM to
-                                                                    // Units/100ms
-            point.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
-            point.profileSlotSelect1 = 0; /* auxiliary PID [0,1], leave zero */
-            point.zeroPos = (i == 0); /* set this to true on the first point */
-            point.isLastPoint = ((i + 1) == totalCnt); /* set this to true on the last point */
-            point.arbFeedFwd = 0; /* you can add a constant offset to add to PID[0] output here */
-
-            bufferedStream.Write(point);
-        }
+    public void initMotionBuffer(BufferedTrajectoryPointStream buffer) {
+        bufferedStream = buffer;
     }
 
     public void resetMotionProfile() {
@@ -141,6 +118,10 @@ public class VikingSRX {
         motor.setNeutralMode(mode);
     }
 
+    public void zeroSensor() {
+        motor.setSelectedSensorPosition(0);
+    }
+
     public int getTicks() {
         return motor.getSelectedSensorPosition();
     }
@@ -155,10 +136,6 @@ public class VikingSRX {
 
     public boolean isMotionProfileFinished() {
         return motor.isMotionProfileFinished();
-    }
-
-    public void zeroSensor() {
-        motor.setSelectedSensorPosition(0);
     }
 
     public TalonSRX getTalonSRX() {
