@@ -17,8 +17,12 @@ public class MotionProfileBuffer {
         leftPoints = CSVFileManager.pathLeft(folder);
         rightPoints = CSVFileManager.pathRight(folder);
 
+        System.out.println("Done reading from CSV");
+
         writeLeftBuffer(leftPoints, leftPoints.length);
         writeRightBuffer(rightPoints, rightPoints.length);
+
+        System.out.println("Done writing buffers");
     }
 
     public BufferedTrajectoryPointStream getLeftBuffer() {
@@ -49,6 +53,8 @@ public class MotionProfileBuffer {
 
             leftBuffer.Write(point);
         }
+
+        System.out.println("Done Writing Left Buffer");
     }
 
     private void writeRightBuffer(Double[][] profile, int totalCnt) {
@@ -71,5 +77,7 @@ public class MotionProfileBuffer {
 
             rightBuffer.Write(point);
         }
+
+        System.out.println("Done Writing Right Buffer");
     }
 }

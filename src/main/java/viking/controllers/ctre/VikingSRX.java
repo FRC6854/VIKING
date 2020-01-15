@@ -10,7 +10,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 public class VikingSRX {
 
     private TalonSRX motor;
-    private BufferedTrajectoryPointStream bufferedStream = new BufferedTrajectoryPointStream();
 
     /**
      * Constructor for VikingSRX without encoder
@@ -80,12 +79,7 @@ public class VikingSRX {
         motor.setSelectedSensorPosition(0);
     }
 
-    public void initMotionBuffer(BufferedTrajectoryPointStream buffer) {
-        bufferedStream = buffer;
-    }
-
     public void resetMotionProfile() {
-        bufferedStream.Clear();
         motor.clearMotionProfileTrajectories();
     }
 
@@ -105,8 +99,9 @@ public class VikingSRX {
         motor.set(ControlMode.MotionMagic, ticks);
     }
 
-    public void motionProfileStart() {
-        motor.startMotionProfile(bufferedStream, 10, ControlMode.MotionProfile);
+    public void motionProfileStart(BufferedTrajectoryPointStream stream) {
+        System.out.println("Starting stream");
+        motor.startMotionProfile(stream, 10, ControlMode.MotionProfile);
     }
 
     public void setNeutralMode(NeutralMode mode) {
