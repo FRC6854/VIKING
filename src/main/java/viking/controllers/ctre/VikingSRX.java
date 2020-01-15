@@ -12,8 +12,6 @@ public class VikingSRX {
     private TalonSRX motor;
     private BufferedTrajectoryPointStream bufferedStream = new BufferedTrajectoryPointStream();
 
-    private double metersPerRevolution = 0;
-
     /**
      * Constructor for VikingSRX without encoder
      * @param id the CAN ID for the Talon SRX
@@ -43,12 +41,9 @@ public class VikingSRX {
      */
     public VikingSRX(int id, boolean inverted, boolean sensorPhase, 
                             FeedbackDevice device, double kF, double kP, double kI, 
-                            double kD, double velocity, double acceleration,
-                            double metersPerRevolution) {
+                            double kD, double velocity, double acceleration) {
 
         this.motor = new TalonSRX(id);
-
-        this.metersPerRevolution = metersPerRevolution;
 
         motor.configFactoryDefault();
 
