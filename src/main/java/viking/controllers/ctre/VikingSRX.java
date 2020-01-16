@@ -1,6 +1,7 @@
 package viking.controllers.ctre;
 
 import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
+import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -8,8 +9,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class VikingSRX {
 
-    private BufferedTrajectoryPointStream pointStream = new BufferedTrajectoryPointStream();
     private TalonSRX motor;
+    private BufferedTrajectoryPointStream bufferedStream = new BufferedTrajectoryPointStream();
+
+    private double metersPerRevolution = 0;
 
     /**
      * Constructor for VikingSRX without encoder
@@ -40,9 +43,12 @@ public class VikingSRX {
      */
     public VikingSRX(int id, boolean inverted, boolean sensorPhase, 
                             FeedbackDevice device, double kF, double kP, double kI, 
-                            double kD, double velocity, double acceleration) {
+                            double kD, double velocity, double acceleration,
+                            double metersPerRevolution) {
 
         this.motor = new TalonSRX(id);
+
+        this.metersPerRevolution = metersPerRevolution;
 
         motor.configFactoryDefault();
 
@@ -79,7 +85,35 @@ public class VikingSRX {
         motor.setSelectedSensorPosition(0);
     }
 
+    public void initMotionBuffer(Double[][] profile, int totalCnt) {
+        TrajectoryPoint point = new TrajectoryPoint(); // temp for for loop, since unused params are initialized
+                                                    // automatically, you can alloc just one
+
+        /* Insert every point into buffer, no limit on size */
+        for (int i = 0; i < totalCnt; ++i) {
+
+            double positionRot = profile[i][0] * (1 / metersPerRevolution);
+            double velocityRPM = profile[i][1] * (1 / metersPerRevolution);
+            int durationMilliseconds = profile[i][2].intValue();
+
+            /* for each point, fill our structure and pass it to API */
+            point.timeDur = durationMilliseconds;
+            point.position = positionRot * 4096; // Convert Revolutions to
+                                                            // Units
+            point.velocity = velocityRPM * 4096 / 600.0; // Convert RPM to
+                                                                    // Units/100ms
+            point.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
+            point.profileSlotSelect1 = 0; /* auxiliary PID [0,1], leave zero */
+            point.zeroPos = (i == 0); /* set this to true on the first point */
+            point.isLastPoint = ((i + 1) == totalCnt); /* set this to true on the last point */
+            point.arbFeedFwd = 0; /* you can add a constant offset to add to PID[0] output here */
+
+            bufferedStream.Write(point);
+        }
+    }
+
     public void resetMotionProfile() {
+        bufferedStream.Clear();
         motor.clearMotionProfileTrajectories();
     }
 
@@ -99,20 +133,12 @@ public class VikingSRX {
         motor.set(ControlMode.MotionMagic, ticks);
     }
 
-    public void setBufferProfileStream(BufferedTrajectoryPointStream stream) {
-        pointStream = stream;
-    }
-
     public void motionProfileStart() {
-        motor.startMotionProfile(pointStream, 10, ControlMode.MotionProfile);
+        motor.startMotionProfile(bufferedStream, 10, ControlMode.MotionProfile);
     }
 
     public void setNeutralMode(NeutralMode mode) {
         motor.setNeutralMode(mode);
-    }
-
-    public void zeroSensor() {
-        motor.setSelectedSensorPosition(0);
     }
 
     public int getTicks() {
@@ -129,6 +155,10 @@ public class VikingSRX {
 
     public boolean isMotionProfileFinished() {
         return motor.isMotionProfileFinished();
+    }
+
+    public void zeroSensor() {
+        motor.setSelectedSensorPosition(0);
     }
 
     public TalonSRX getTalonSRX() {
