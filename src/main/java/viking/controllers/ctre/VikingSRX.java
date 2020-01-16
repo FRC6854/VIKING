@@ -1,7 +1,6 @@
 package viking.controllers.ctre;
 
 import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
-import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -9,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class VikingSRX {
 
+    private BufferedTrajectoryPointStream pointStream = new BufferedTrajectoryPointStream();
     private TalonSRX motor;
 
     /**
@@ -99,9 +99,12 @@ public class VikingSRX {
         motor.set(ControlMode.MotionMagic, ticks);
     }
 
-    public void motionProfileStart(BufferedTrajectoryPointStream stream) {
-        System.out.println("Starting stream");
-        motor.startMotionProfile(stream, 10, ControlMode.MotionProfile);
+    public void setBufferProfileStream(BufferedTrajectoryPointStream stream) {
+        pointStream = stream;
+    }
+
+    public void motionProfileStart() {
+        motor.startMotionProfile(pointStream, 10, ControlMode.MotionProfile);
     }
 
     public void setNeutralMode(NeutralMode mode) {
