@@ -6,8 +6,8 @@ public class ProfileBuffer {
     private Double[][] rightProfile;
 
     public ProfileBuffer(String folder) {
-        leftProfile = CSVFileManager.pathLeft(folder);
-        rightProfile = CSVFileManager.pathRight(folder);
+        leftProfile = CSVFileManager.pathLeft("/home/lvuser/paths/" + folder);
+        rightProfile = CSVFileManager.pathRight("/home/lvuser/paths/" + folder);
     }
 
     public Double[][] getLeftProfile() {
