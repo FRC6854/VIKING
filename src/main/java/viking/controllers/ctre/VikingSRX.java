@@ -134,7 +134,7 @@ public class VikingSRX {
     }
 
     public void motionProfileStart() {
-        motor.startMotionProfile(bufferedStream, 10, ControlMode.MotionProfile);
+        motor.startMotionProfile(bufferedStream, 5, ControlMode.MotionProfile);
     }
 
     public void setNeutralMode(NeutralMode mode) {
