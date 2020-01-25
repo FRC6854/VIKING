@@ -1,5 +1,6 @@
 package viking.controllers.ctre;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class VikingSPX {
@@ -30,6 +31,14 @@ public class VikingSPX {
 
         motor.follow(master.getTalonSRX());
         motor.setInverted(inverted);
+    }
+
+    public void percentOutput(double value) {
+        motor.set(ControlMode.PercentOutput, value);
+    }
+
+    public ControlMode getControlMode() {
+        return motor.getControlMode();
     }
 
     public VictorSPX getVictorSPX() {
