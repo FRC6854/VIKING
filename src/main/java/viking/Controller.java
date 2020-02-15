@@ -6,79 +6,104 @@ public class Controller {
     
     private XboxController controller;
 
+    private double lTriggerDeadband = 0;
+    private double rTriggerDeadband = 0;
+
+    private double lJoystickDeadbandX = 0;
+    private double lJoystickDeadbandY = 0;
+
+    private double rJoystickDeadbandX = 0;
+    private double rJoystickDeadbandY = 0;
+
     public Controller(int port) {
         controller = new XboxController(port);
     }
 
-    public double getDriverLeftStickY() {
+    public void setControllerLeftStickXDeadband(double value) {
+      lJoystickDeadbandX = value;
+    }
+
+    public void setControllerLeftStickYDeadband(double value) {
+      lJoystickDeadbandY = value;
+    }
+
+    public void setControllerRightStickXDeadband(double value) {
+      rJoystickDeadbandX = value;
+    }
+
+    public void setControllerRightStickYDeadband(double value) {
+      rJoystickDeadbandY = value;
+    }
+
+    public double getControllerLeftStickY() {
         return controller.getRawAxis(1) * -1;
       }
     
-      public double getDriverLeftStickX() {
+      public double getControllerLeftStickX() {
         return controller.getRawAxis(0);
       }
     
-      public double getDriverRightStickX() {
+      public double getControllerRightStickX() {
         return controller.getRawAxis(4);
       }
     
-      public double getDriverRightStickY() {
+      public double getControllerRightStickY() {
         return controller.getRawAxis(5);
       }
     
-      public double getDriverLTrigger() {
+      public double getControllerLTrigger() {
         return controller.getRawAxis(2);
       }
     
-      public double getDriverRTrigger() {
+      public double getControllerRTrigger() {
         return controller.getRawAxis(3);
       }
     
-      public boolean getDriverLBumperPressed(){
+      public boolean getControllerLBumperPressed(){
         return controller.getRawButtonPressed(5);
       }
     
-      public boolean getDriverLBumper(){
+      public boolean getControllerLBumper(){
         return controller.getRawButton(5);
       }
     
-      public boolean getDriverRBumperPressed(){
+      public boolean getControllerRBumperPressed(){
         return controller.getRawButtonPressed(6);
       }
     
-      public boolean getDriverRBumper(){
+      public boolean getControllerRBumper(){
         return controller.getRawButton(6);
       }
     
-      public boolean getDriverAButtonPressed() {
+      public boolean getControllerAButtonPressed() {
         return controller.getAButtonPressed();
       }
     
-      public boolean getDriverAButton() {
+      public boolean getControllerAButton() {
         return controller.getAButton();
       }
     
-      public boolean getDriverBButtonPressed() {
+      public boolean getControllerBButtonPressed() {
         return controller.getBButtonPressed();
       }
     
-      public boolean getDriverBButton() {
+      public boolean getControllerBButton() {
         return controller.getBButton();
       }
     
-      public boolean getDriverXButtonPressed() {
+      public boolean getControllerXButtonPressed() {
         return controller.getXButtonPressed();
       }
     
-      public boolean getDriverYButtonPressed() {
+      public boolean getControllerYButtonPressed() {
         return controller.getYButtonPressed();
       }
      
-      public boolean getDriverStartButtonPressed() {
+      public boolean getControllerStartButtonPressed() {
         return controller.getStartButtonPressed();
       }
     
-      public boolean getDriverStartButton(){
+      public boolean getControllerStartButton(){
         return controller.getStartButton();
       }
 }
