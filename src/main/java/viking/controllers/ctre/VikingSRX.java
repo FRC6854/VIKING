@@ -85,6 +85,51 @@ public class VikingSRX {
         motor.setSelectedSensorPosition(0);
     }
 
+    public void percentOutput(double value) {
+        motor.set(ControlMode.PercentOutput, value);
+    }
+
+    public void positionControl(double ticks) {
+        motor.set(ControlMode.Position, ticks);
+    }
+
+    public void velocityControl(int velocity) {
+        motor.set(ControlMode.Velocity, velocity);
+    }
+
+    public void motionMagic(double ticks) {
+        motor.set(ControlMode.MotionMagic, ticks);
+    }
+
+    public void setNeutralMode(NeutralMode mode) {
+        motor.setNeutralMode(mode);
+    }
+
+    public int getTicks() {
+        return motor.getSelectedSensorPosition();
+    }
+
+    public int getVelocity() {
+        return motor.getSelectedSensorVelocity();
+    }
+
+    public ControlMode getControlMode() {
+        return motor.getControlMode();
+    }
+
+    public void zeroSensor() {
+        motor.setSelectedSensorPosition(0);
+    }
+
+    public TalonSRX getTalonSRX() {
+        return motor;
+    }
+
+    /*
+        --------------------------------
+                Motion Profiling
+        --------------------------------
+    */
     public void initMotionBuffer(Double[][] profile, int totalCnt) {
         TrajectoryPoint point = new TrajectoryPoint(); // temp for for loop, since unused params are initialized
                                                     // automatically, you can alloc just one
@@ -117,51 +162,11 @@ public class VikingSRX {
         motor.clearMotionProfileTrajectories();
     }
 
-    public void percentOutput(double value) {
-        motor.set(ControlMode.PercentOutput, value);
-    }
-
-    public void positionControl(double ticks) {
-        motor.set(ControlMode.Position, ticks);
-    }
-
-    public void velocityControl(int velocity) {
-        motor.set(ControlMode.Velocity, velocity);
-    }
-
-    public void motionMagic(double ticks) {
-        motor.set(ControlMode.MotionMagic, ticks);
-    }
-
     public void motionProfileStart() {
         motor.startMotionProfile(bufferedStream, 5, ControlMode.MotionProfile);
     }
 
-    public void setNeutralMode(NeutralMode mode) {
-        motor.setNeutralMode(mode);
-    }
-
-    public int getTicks() {
-        return motor.getSelectedSensorPosition();
-    }
-
-    public int getVelocity() {
-        return motor.getSelectedSensorVelocity();
-    }
-
-    public ControlMode getControlMode() {
-        return motor.getControlMode();
-    }
-
     public boolean isMotionProfileFinished() {
         return motor.isMotionProfileFinished();
-    }
-
-    public void zeroSensor() {
-        motor.setSelectedSensorPosition(0);
-    }
-
-    public TalonSRX getTalonSRX() {
-        return motor;
     }
 }

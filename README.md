@@ -10,7 +10,7 @@ The JitPack is based off of FRC 1540s library ROOSTER and you can go check it ou
 ### Controller
 `viking.Controller`
 
-Includes support for X-Box One Controller for driving.
+Includes support for X-Box One Controller with pre-made inverts for proper values.
 
 ### CSV File Manager
 `viking.CSVFileManager`
@@ -38,14 +38,29 @@ A custom PID Controller for closed-loop control on FRC robots. Probably will be 
 Modular speed controller for our swerve robot since we don't have enough of one motor controller.
 
 ### VikingSPX
-`viking.controllers.VikingSPX`
+`viking.controllers.ctre.VikingSPX`
 
 Wrapper for VictorSPX from CTRE. Includes easy to use controls + ability to follow master controllers.
 
 ### VikingSRX
-`viking.controllers.VikingSPX`
+`viking.controllers.ctre.VikingSPX`
 
 Wrapper for TalonSRX from CTRE. Includes easy to use controls + closed-loop control + motion profiling.
+
+### VikingPigeon
+`viking.controllers.ctre.VikingPigeon`
+
+Wrapper for PigeonIMU from CTRE. More features to come in future updates when we actually get a PigeonIMU.
+
+### VikingMAX
+`viking.controllers.rev.VikingMAX`
+
+Wrapper for CANSparkMAX from REV Robotics. Includes easy to use controls + closed-loop control + smart motion + follower controllers.
+
+### ColorSensor
+`viking.controllers.rev.ColorSensor`
+
+Wrapper for ColorSensorV3 from REV Robotics. Comes with matcher for detecting colours from the sensor output.
 
 ### LED Controller
 `viking.led.LEDController`
@@ -78,7 +93,10 @@ dependencies {
 }
 ```
 
-Additionally, you should be using the latest version of GradleRIO with CTRE Phoenix vendor libraries installed.
+Make sure you have the following `vendordeps` added to your project.
+- Phoenix
+- REVColorSensorV3
+- REVRobotics
 
 We use [JitPack](https://jitpack.io) as a Gradle/Maven repository. This means that if you add the project using Gradle it will be automatically updated with the latest changes to the `master` branch, as well as source code and documentation .jar files.
 
