@@ -28,12 +28,12 @@ public class Vector {
             x = dir_x;
             y = mag_y;
             direction = vectorDir(x, y);
-            magnitude = genmath.hyplength(x, y);
+            magnitude = genmath.hypLength(x, y);
         }}
 
     private double vectorDir(double x, double y){
         //"Normalizes" y by setting it to be within the boundaries of a unit circle
-        y = (y*(1/genmath.hyplength(x,y))); 
+        y = (y*(1/genmath.hypLength(x,y))); 
     
         // angle of the point (0-360)
         double deg0 = Math.floor((Math.toDegrees(Math.acos(y)))*100)/100; // acos
