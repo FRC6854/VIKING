@@ -15,6 +15,10 @@ public class Limelight {
       ON
     }
 
+    private double cameraHeight = 0; // Unit in meters
+    private double cameraAngle = 0; // Unit in degrees
+    private double targetHeight = 0; // Height in meters
+
     /**
      * Whether the limelight has any valid targets (0 or 1)
      * @return Returns true if vision target is found
@@ -111,17 +115,37 @@ public class Limelight {
     public void setPipeline(int pipelineID) {
       limelight.getEntry("pipeline").setNumber(pipelineID);
     }
+
+    /**
+     * Set the height of the camera in the robot
+     * @param height the height of the camera in meters
+     */
+    public void setCameraHeight(double height) {
+      cameraHeight = height;
+    }
+
+    /**
+     * Set the angle of the camera where 0 is level with the ground
+     * @param angle the angle of the camera in degrees
+     */
+    public void setCameraAngle(double angle) {
+      cameraAngle = angle;
+    }
+
+    /**
+     * Sets the target height for the years target
+     * @param height the height of the target in meters
+     */
+    public void setTargetHeight(double height) {
+      targetHeight = height;
+    }
   
     /**
      * Uses current targetY to calculate the distance to the target
      * @return the distance to the target in inches (estimation)
      */
     public double getDistanceFromTarget() {
-  
-      double tapeHeight = 3; //inches
-      double limelightHeight = 2; //inches
-      return (tapeHeight-limelightHeight)/Math.tan(Math.toRadians(targetY()));
-      // we know angle and opposite, so we can use tan to find the adjacent.
+      return (targetHeight - cameraHeight) / Math.tan(cameraAngle - targetY());
     }
   
     /**
