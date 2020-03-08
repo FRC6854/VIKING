@@ -20,32 +20,32 @@ public class Controller {
   }
 
   public double getControllerLeftStickX() {
-    if (controller.getRawAxis(0) < lJoystickDeadbandX) return 0;
+    if (Math.abs(controller.getRawAxis(0)) < lJoystickDeadbandX) return 0;
     return controller.getRawAxis(0);
   }
 
   public double getControllerLeftStickY() {
-    if (controller.getRawAxis(1) * -1 < lJoystickDeadbandY) return 0;
+    if (Math.abs(controller.getRawAxis(1) * -1) < lJoystickDeadbandY) return 0;
     return controller.getRawAxis(1) * -1;
   }
 
   public double getControllerRightStickX() {
-    if (controller.getRawAxis(4) < rJoystickDeadbandX) return 0;
+    if (Math.abs(controller.getRawAxis(4)) < rJoystickDeadbandX) return 0;
     return controller.getRawAxis(4);
   }
 
   public double getControllerRightStickY() {
-    if (controller.getRawAxis(5) < rJoystickDeadbandY) return 0;
+    if (Math.abs(controller.getRawAxis(5)) < rJoystickDeadbandY) return 0;
     return controller.getRawAxis(5);
   }
 
   public double getControllerLTrigger() {
-    if (controller.getRawAxis(2) < lTriggerDeadband) return 0;
+    if (Math.abs(controller.getRawAxis(2)) < lTriggerDeadband) return 0;
     return controller.getRawAxis(2);
   }
 
   public double getControllerRTrigger() {
-    if (controller.getRawAxis(3) < rTriggerDeadband) return 0;
+    if (Math.abs(controller.getRawAxis(3)) < rTriggerDeadband) return 0;
     return controller.getRawAxis(3);
   }
 

@@ -4,6 +4,7 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class VikingMAX {
@@ -39,6 +40,7 @@ public class VikingMAX {
         
         setPIDF(kP, kI, kD, kF);
         setSmartMotion(velocity, acceleration);
+        setIdleMode(IdleMode.kBrake);
     }
 
     /**
@@ -56,6 +58,8 @@ public class VikingMAX {
         encoder = motor.getEncoder();
 
         pidController.setOutputRange(-1, 1);
+        
+        setIdleMode(IdleMode.kBrake);
     }
 
     /**
@@ -175,6 +179,14 @@ public class VikingMAX {
      */
     public void zeroEncoder() {
         encoder.setPosition(0);
+    }
+
+    /**
+     * Set the current idle mode (coast / break)
+     * @param mode the mode to set
+     */
+    public void setIdleMode(IdleMode mode) {
+        motor.setIdleMode(mode);
     }
 
     /**
