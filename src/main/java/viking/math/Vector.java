@@ -1,7 +1,5 @@
 package viking.math;
 
-import viking.math.General;
-
 public class Vector {
     public double direction;
     public double magnitude;
@@ -50,11 +48,11 @@ public class Vector {
 
         return new Vector(Vx, Vy, true);
     }
+
     public Vector subtract(Vector vec2){
         double Vx = x - vec2.x;
         double Vy = y - vec2.y;
 
         return new Vector(Vx, Vy, true);
     }
-
 }

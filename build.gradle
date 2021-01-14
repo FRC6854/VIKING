@@ -2,13 +2,11 @@ plugins {
     id "java"
     id "maven"
     id "maven-publish"
-    id "edu.wpi.first.GradleRIO" version "2020.3.2"
+    id "edu.wpi.first.GradleRIO" version "2021.1.2"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
-
-group = 'com.github.FRC6854'
 
 // Maven central needed for JUnit
 repositories {
@@ -19,6 +17,12 @@ repositories {
     }
 }
 
+group = 'com.github.FRC6854'
+version = '1.19.0'
+
+// Set this to true to enable desktop support.
+def includeDesktopSupport = false
+
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
 dependencies {
@@ -26,9 +30,17 @@ dependencies {
     nativeZip wpi.deps.wpilibJni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.wpilibJni(wpi.platforms.desktop)
 
+
     implementation wpi.deps.vendor.java()
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
+
+    testImplementation 'junit:junit:4.12'
+
+    // Enable simulation gui support. Must check the box in vscode to enable support
+    // upon debugging
+    simulation wpi.deps.sim.gui(wpi.platforms.desktop, false)
+    simulation wpi.deps.sim.driverstation(wpi.platforms.desktop, false)
 }
 
 // To specify a license in the pom:
@@ -47,7 +59,7 @@ install {
 }
 
 wrapper {
-    gradleVersion = '5.0'
+    gradleVersion = '6.0.1'
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -55,5 +67,5 @@ wrapper {
 // in order to make them all available at runtime. Also adding the manifest so WPILib
 // knows where to look for our Robot Class.
 jar {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 }

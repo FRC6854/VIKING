@@ -105,11 +105,11 @@ public class VikingSRX {
         motor.setNeutralMode(mode);
     }
 
-    public int getTicks() {
+    public double getTicks() {
         return motor.getSelectedSensorPosition();
     }
 
-    public int getVelocity() {
+    public double getVelocity() {
         return motor.getSelectedSensorVelocity();
     }
 
