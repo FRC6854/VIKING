@@ -4,12 +4,9 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-public class VikingMAX {
+public class VikingMAX extends CANSparkMax {
 
-    private CANSparkMax motor = null;
     private CANPIDController pidController = null;
     private CANEncoder encoder = null;
 
@@ -27,14 +24,13 @@ public class VikingMAX {
                             double kF, double kP, double kI, 
                             double kD, double velocity, double acceleration) {
 
-        motor = new CANSparkMax(id, MotorType.kBrushless);
+        super(id, MotorType.kBrushless);
 
-        motor.restoreFactoryDefaults();
+        restoreFactoryDefaults();
+        setInverted(inverted);
 
-        motor.setInverted(inverted);
-
-        pidController = motor.getPIDController();
-        encoder = motor.getEncoder();
+        pidController = getPIDController();
+        encoder = getEncoder();
 
         pidController.setOutputRange(-1, 1);
         
@@ -48,14 +44,15 @@ public class VikingMAX {
      * @param inverted is the motor inverted
      */
     public VikingMAX(int id, boolean inverted) {
-        motor = new CANSparkMax(id, MotorType.kBrushless);
 
-        motor.restoreFactoryDefaults();
+        super(id, MotorType.kBrushless);
 
-        motor.setInverted(inverted);
+        restoreFactoryDefaults();
 
-        pidController = motor.getPIDController();
-        encoder = motor.getEncoder();
+        setInverted(inverted);
+
+        pidController = getPIDController();
+        encoder = getEncoder();
 
         pidController.setOutputRange(-1, 1);
         
@@ -67,7 +64,7 @@ public class VikingMAX {
      * @param master the master controller to follow
      */
     public void setFollower(VikingMAX master) {
-        motor.follow(master.getSparkMAX());
+        follow(master);
     }
 
     /**
@@ -99,7 +96,7 @@ public class VikingMAX {
      * @param value
      */
     public void percentOutput(double value) {
-        motor.set(value);
+        set(value);
     }
 
     /**
@@ -139,7 +136,7 @@ public class VikingMAX {
      * @return the current applied output from -1 to 1
      */
     public double getOutput() {
-        return motor.getAppliedOutput();
+        return getAppliedOutput();
     }
 
     /**
@@ -180,21 +177,4 @@ public class VikingMAX {
     public void zeroEncoder() {
         encoder.setPosition(0);
     }
-
-    /**
-     * Set the current idle mode (coast / break)
-     * @param mode the mode to set
-     */
-    public void setIdleMode(IdleMode mode) {
-        motor.setIdleMode(mode);
-    }
-
-    /**
-     * Returns the CANSparkMax controller for lower access control
-     * @return the CANSparkMax controller
-     */
-    public CANSparkMax getSparkMAX() {
-        return motor;
-    }
 }
-

@@ -5,11 +5,10 @@ import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public class VikingSRX {
+public class VikingSRX extends WPI_TalonSRX {
 
-    private TalonSRX motor;
     private BufferedTrajectoryPointStream bufferedStream = new BufferedTrajectoryPointStream();
 
     private double metersPerRevolution = 0;
@@ -20,11 +19,11 @@ public class VikingSRX {
      * @param inverted is the motor inverted
      */
     public VikingSRX(int id, boolean inverted) {
-        this.motor = new TalonSRX(id);
-
-        motor.configFactoryDefault();
-
-        motor.setInverted(inverted);
+        super(id);
+        configFactoryDefault();
+        setNeutralMode(NeutralMode.Brake);
+        setSafetyEnabled(false);
+        setInverted(inverted);
     }
 
     /**
@@ -46,31 +45,31 @@ public class VikingSRX {
                             double kD, double velocity, double acceleration,
                             double metersPerRevolution) {
 
-        this.motor = new TalonSRX(id);
+        super(id);
 
         this.metersPerRevolution = metersPerRevolution;
 
-        motor.configFactoryDefault();
+        configFactoryDefault();
 
         // Invert Power
-        motor.setInverted(inverted);
+        setInverted(inverted);
 
         // Invert Encoder
-        motor.setSensorPhase(sensorPhase);
+        setSensorPhase(sensorPhase);
 
-        motor.configSelectedFeedbackSensor(device, 0, 0);
+        configSelectedFeedbackSensor(device, 0, 0);
 
         // Set-up PIDF[0]
-        motor.selectProfileSlot(0, 0);
+        selectProfileSlot(0, 0);
 
-        motor.config_kF(0, kF, 0);
-        motor.config_kP(0, kP, 0);
-        motor.config_kI(0, kI, 0);
-        motor.config_kD(0, kD, 0);
+        config_kF(0, kF, 0);
+        config_kP(0, kP, 0);
+        config_kI(0, kI, 0);
+        config_kD(0, kD, 0);
 
         // Motion Magic
-        motor.configMotionCruiseVelocity(1250);
-        motor.configMotionAcceleration(1500);
+        configMotionCruiseVelocity(1250);
+        configMotionAcceleration(1500);
 
         /*  
             --------------
@@ -78,51 +77,47 @@ public class VikingSRX {
             --------------
             In our case we must use the value 25ms for both since in our profile we use a delta time of 50ms
         */
-        motor.configMotionProfileTrajectoryPeriod(25);
-        motor.changeMotionControlFramePeriod(25);
+        configMotionProfileTrajectoryPeriod(25);
+        changeMotionControlFramePeriod(25);
 
         // Zero Sensor
-        motor.setSelectedSensorPosition(0);
+        setSelectedSensorPosition(0);
     }
 
     public void percentOutput(double value) {
-        motor.set(ControlMode.PercentOutput, value);
+        set(ControlMode.PercentOutput, value);
     }
 
     public void positionControl(double ticks) {
-        motor.set(ControlMode.Position, ticks);
+        set(ControlMode.Position, ticks);
     }
 
     public void velocityControl(int velocity) {
-        motor.set(ControlMode.Velocity, velocity);
+        set(ControlMode.Velocity, velocity);
     }
 
     public void motionMagic(double ticks) {
-        motor.set(ControlMode.MotionMagic, ticks);
+        set(ControlMode.MotionMagic, ticks);
     }
 
     public void setNeutralMode(NeutralMode mode) {
-        motor.setNeutralMode(mode);
+        setNeutralMode(mode);
     }
 
     public double getTicks() {
-        return motor.getSelectedSensorPosition();
+        return getSelectedSensorPosition();
     }
 
     public double getVelocity() {
-        return motor.getSelectedSensorVelocity();
+        return getSelectedSensorVelocity();
     }
 
     public ControlMode getControlMode() {
-        return motor.getControlMode();
+        return getControlMode();
     }
 
     public void zeroSensor() {
-        motor.setSelectedSensorPosition(0);
-    }
-
-    public TalonSRX getTalonSRX() {
-        return motor;
+        setSelectedSensorPosition(0);
     }
 
     /*
@@ -159,14 +154,14 @@ public class VikingSRX {
 
     public void resetMotionProfile() {
         bufferedStream.Clear();
-        motor.clearMotionProfileTrajectories();
+        clearMotionProfileTrajectories();
     }
 
     public void motionProfileStart() {
-        motor.startMotionProfile(bufferedStream, 5, ControlMode.MotionProfile);
+        startMotionProfile(bufferedStream, 5, ControlMode.MotionProfile);
     }
 
     public boolean isMotionProfileFinished() {
-        return motor.isMotionProfileFinished();
+        return isMotionProfileFinished();
     }
 }

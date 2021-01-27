@@ -1,22 +1,23 @@
 package viking.controllers.ctre;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
-public class VikingSPX {
-
-    private VictorSPX motor;
+public class VikingSPX extends WPI_VictorSPX {
 
     /**
      * @param id the CAN ID for the Victor SPX
      * @param inverted is the motor inverted
      */
     public VikingSPX(int id, boolean inverted) {
-        motor = new VictorSPX(id);
 
-        motor.configFactoryDefault();
+        super(id);
 
-        motor.setInverted(inverted);
+        configFactoryDefault();
+        setNeutralMode(NeutralMode.Brake);
+        setSafetyEnabled(false);
+        setInverted(inverted);
     }
 
     /**
@@ -25,24 +26,22 @@ public class VikingSPX {
      * @param inverted is the motor inverted
      */
     public VikingSPX(int id, VikingSRX master, boolean inverted) {
-        motor = new VictorSPX(id);
 
-        motor.configFactoryDefault();
+        super(id);
 
-        motor.follow(master.getTalonSRX());
-        motor.setInverted(inverted);
+        configFactoryDefault();
+        setNeutralMode(NeutralMode.Brake);
+        follow(master);
+        setSafetyEnabled(false);
+        setInverted(inverted);
     }
 
     public void percentOutput(double value) {
-        motor.set(ControlMode.PercentOutput, value);
+        set(ControlMode.PercentOutput, value);
     }
 
     public ControlMode getControlMode() {
-        return motor.getControlMode();
-    }
-
-    public VictorSPX getVictorSPX() {
-        return motor;
+        return getControlMode();
     }
 }
 
