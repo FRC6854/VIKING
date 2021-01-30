@@ -9,16 +9,23 @@ public class LEDController extends SubsystemBase implements LEDMappings {
     private static OI oi;
 
     public static enum LEDMode {
-        TELEOP,
-        AUTO,
+        LCF,
+        LCB,
+        UCF,
+        UCB,
+        BOTH_FWRD,
+        BOTH_BKWD,
+        NO_VISION,
         VISION,
-        DEFAULT,
-        ERROR
+        CLIMB_ACTIVE,
+        WINCH_ACTIVE,
+        LOW_VOLTAGE,
+        DEFAULT
     };
 
     private LEDMode currentMode = LEDMode.DEFAULT;
 
-    public LEDController () {
+    private LEDController () {
         oi = OI.getInstance();
     }
 
@@ -26,82 +33,65 @@ public class LEDController extends SubsystemBase implements LEDMappings {
         currentMode = mode;
 
         switch (mode) {
-            case TELEOP:
-                setTeleop();
+            case LCF:
+                sendData(LCF);
                 break;
-            case AUTO:
-                setAuto();
+            case LCB:
+                sendData(LCB);
+                break;
+            case UCF:
+                sendData(UCF);
+                break;
+            case UCB:
+                sendData(UCB);
+                break;
+            case BOTH_FWRD:
+                sendData(BOTH_BACKWARD);
+                break;
+            case BOTH_BKWD:
+                sendData(BOTH_BACKWARD);
+                break;
+            case NO_VISION:
+                sendData(NO_VISION);
                 break;
             case VISION:
-                setVision();
+                sendData(VISION);
+                break;
+            case CLIMB_ACTIVE:
+                sendData(CLIMB_ACTIVE);
+                break;
+            case WINCH_ACTIVE:
+                sendData(WINCH_ACTIVE);
+                break;
+            case LOW_VOLTAGE:
+                sendData(LOW_VOLTAGE);
                 break;
             case DEFAULT:
-                setDefault();
-                break;
-            case ERROR:
-                setError();
+                sendData(DEFAULT);
                 break;
             default:
-                setDefault();
+                sendData(DEFAULT);
                 break;
         }
     }
 
-    private void setTeleop() {
-        if(oi.getAlliance() == Alliance.Blue) {
-            oi.ledDataSerialPort(Character.toUpperCase(TELEOP));
-        }
-        else if(oi.getAlliance() == Alliance.Red) {
-            oi.ledDataSerialPort(TELEOP);
+    private void sendData(char data) {
+        if (oi.getAlliance() == Alliance.Blue) {
+            oi.ledDataSerialPort(Character.toUpperCase(data));
         }
         else {
-            oi.ledDataSerialPort(TELEOP);
+            oi.ledDataSerialPort(data);
         }
     }
 
-    private void setAuto() {
-        if(oi.getAlliance() == Alliance.Blue) {
-            oi.ledDataSerialPort(Character.toUpperCase(AUTO));
-        }
-        else if(oi.getAlliance() == Alliance.Red) {
-            oi.ledDataSerialPort(AUTO);
-        }
-        else {
-            oi.ledDataSerialPort(AUTO);
-        }
-    }
-
-    private void setVision() {
-        if(oi.getAlliance() == Alliance.Blue) {
-            oi.ledDataSerialPort(Character.toUpperCase(VISION));
-        }
-        else if(oi.getAlliance() == Alliance.Red) {
-            oi.ledDataSerialPort(VISION);
-        }
-        else {
-            oi.ledDataSerialPort(VISION);
-        }
-    }
-
-    private void setDefault() {
-        if(oi.getAlliance() == Alliance.Blue) {
-            oi.ledDataSerialPort(Character.toUpperCase(DEFAULT));
-        }
-        else if(oi.getAlliance() == Alliance.Red) {
-            oi.ledDataSerialPort(DEFAULT);
-        }
-        else {
-            oi.ledDataSerialPort(DEFAULT);
-        }
-    }
-
-    private void setError() {
-        oi.ledDataSerialPort(ERROR);
+    public LEDMode getCurrentMode() {
+        return currentMode;
     }
 
     public static LEDController getInstance () {
-        if (instance == null)
-          instance = new LEDController();
+        if (instance == null){
+            instance = new LEDController();
+        }
         return instance;
     }
 }
