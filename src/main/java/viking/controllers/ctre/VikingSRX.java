@@ -1,17 +1,13 @@
 package viking.controllers.ctre;
 
-import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
-import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class VikingSRX extends WPI_TalonSRX {
-
-    private BufferedTrajectoryPointStream bufferedStream = new BufferedTrajectoryPointStream();
-
-    private double metersPerRevolution = 0;
 
     /**
      * Constructor for VikingSRX without encoder
@@ -38,16 +34,12 @@ public class VikingSRX extends WPI_TalonSRX {
      * @param kD the D variable of PIDF
      * @param velocity the max velocity for Motion Magic
      * @param acceleration the max acceleration for Motion Magic
-     * @param metersPerRevolution the meters traveled per revolution of the motor
      */
     public VikingSRX(int id, boolean inverted, boolean sensorPhase, 
                             FeedbackDevice device, double kF, double kP, double kI, 
-                            double kD, double velocity, double acceleration,
-                            double metersPerRevolution) {
+                            double kD, double velocity, double acceleration) {
 
         super(id);
-
-        this.metersPerRevolution = metersPerRevolution;
 
         configFactoryDefault();
 
@@ -79,6 +71,61 @@ public class VikingSRX extends WPI_TalonSRX {
         */
         configMotionProfileTrajectoryPeriod(25);
         changeMotionControlFramePeriod(25);
+
+        // Zero Sensor
+        setSelectedSensorPosition(0);
+    }
+
+    /**
+     * Full constructor for VikingSRX
+     * @param id the CAN ID for the Talon SRX
+     * @param inverted is the motor inverted
+     * @param sensorPhase should the encoder be inverted
+     * @param device the type of encoder
+     * @param kF the F variable of PIDF
+     * @param kP the P variable of PIDF
+     * @param kI the I variable of PIDF
+     * @param kD the D variable of PIDF
+     * @param velocity the max velocity for Motion Magic
+     * @param acceleration the max acceleration for Motion Magic
+     * @param pigeon the VikingIMU for path following
+     * @param follower the device following the profile
+     */
+    public VikingSRX(int id, boolean inverted, boolean sensorPhase, 
+                            FeedbackDevice device, double kF, double kP, double kI, 
+                            double kD, double velocity, double acceleration,
+                            VikingIMU pigeon, int follower) {
+
+        super(id);
+
+        configFactoryDefault();
+
+        TalonSRXConfiguration config = new TalonSRXConfiguration();
+
+        config.remoteFilter0.remoteSensorDeviceID = pigeon.getDeviceID();
+        config.remoteFilter0.remoteSensorSource = RemoteSensorSource.Pigeon_Yaw;
+        config.remoteFilter1.remoteSensorDeviceID = follower;
+        config.remoteFilter1.remoteSensorSource = RemoteSensorSource.TalonSRX_SelectedSensor;
+
+        config.diff0Term = FeedbackDevice.RemoteSensor1;
+        config.diff1Term = FeedbackDevice.IntegratedSensor;
+
+        config.primaryPID.selectedFeedbackSensor = FeedbackDevice.SensorDifference;
+        config.primaryPID.selectedFeedbackCoefficient = 0.5;
+
+        config.auxiliaryPID.selectedFeedbackSensor = FeedbackDevice.RemoteSensor0;
+
+        config.motionCruiseVelocity = velocity;
+        config.motionAcceleration = acceleration;
+        config.motionProfileTrajectoryPeriod = 25;
+
+        configAllSettings(config);
+
+        // Invert Power
+        setInverted(inverted);
+
+        // Invert Encoder
+        setSensorPhase(sensorPhase);
 
         // Zero Sensor
         setSelectedSensorPosition(0);
@@ -118,50 +165,5 @@ public class VikingSRX extends WPI_TalonSRX {
 
     public void zeroSensor() {
         setSelectedSensorPosition(0);
-    }
-
-    /*
-        --------------------------------
-                Motion Profiling
-        --------------------------------
-    */
-    public void initMotionBuffer(Double[][] profile, int totalCnt) {
-        TrajectoryPoint point = new TrajectoryPoint(); // temp for for loop, since unused params are initialized
-                                                    // automatically, you can alloc just one
-
-        /* Insert every point into buffer, no limit on size */
-        for (int i = 0; i < totalCnt; ++i) {
-
-            double positionRot = profile[i][0] * (1 / metersPerRevolution);
-            double velocityRPM = profile[i][1] * (1 / metersPerRevolution);
-            int durationMilliseconds = profile[i][2].intValue();
-
-            /* for each point, fill our structure and pass it to API */
-            point.timeDur = durationMilliseconds;
-            point.position = positionRot * 4096; // Convert Revolutions to
-                                                            // Units
-            point.velocity = velocityRPM * 4096 / 600.0; // Convert RPM to
-                                                                    // Units/100ms
-            point.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
-            point.profileSlotSelect1 = 0; /* auxiliary PID [0,1], leave zero */
-            point.zeroPos = (i == 0); /* set this to true on the first point */
-            point.isLastPoint = ((i + 1) == totalCnt); /* set this to true on the last point */
-            point.arbFeedFwd = 0; /* you can add a constant offset to add to PID[0] output here */
-
-            bufferedStream.Write(point);
-        }
-    }
-
-    public void resetMotionProfile() {
-        bufferedStream.Clear();
-        clearMotionProfileTrajectories();
-    }
-
-    public void motionProfileStart() {
-        startMotionProfile(bufferedStream, 5, ControlMode.MotionProfile);
-    }
-
-    public boolean isMotionProfileFinished() {
-        return isMotionProfileFinished();
     }
 }
