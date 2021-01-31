@@ -82,10 +82,14 @@ public class VikingSRX extends WPI_TalonSRX {
      * @param inverted is the motor inverted
      * @param sensorPhase should the encoder be inverted
      * @param device the type of encoder
-     * @param kF the F variable of PIDF
-     * @param kP the P variable of PIDF
-     * @param kI the I variable of PIDF
-     * @param kD the D variable of PIDF
+     * @param kF the F variable of PIDF[0]
+     * @param kP the P variable of PIDF[0]
+     * @param kI the I variable of PIDF[0]
+     * @param kD the D variable of PIDF[0]
+     * @param kF_TURN the F variable of PIDF[1]
+     * @param kP_TURN the P variable of PIDF[1]
+     * @param kI_TURN the I variable of PIDF[1]
+     * @param kD_TURN the D variable of PIDF[1]
      * @param velocity the max velocity for Motion Magic
      * @param acceleration the max acceleration for Motion Magic
      * @param pigeon the VikingIMU for path following
@@ -93,7 +97,8 @@ public class VikingSRX extends WPI_TalonSRX {
      */
     public VikingSRX(int id, boolean inverted, boolean sensorPhase, 
                             FeedbackDevice device, double kF, double kP, double kI, 
-                            double kD, double velocity, double acceleration,
+                            double kD, double kF_TURN, double kP_TURN, double kI_TURN, 
+                            double kD_TURN, double velocity, double acceleration,
                             VikingIMU pigeon, int follower) {
 
         super(id);
@@ -118,6 +123,16 @@ public class VikingSRX extends WPI_TalonSRX {
         config.motionCruiseVelocity = velocity;
         config.motionAcceleration = acceleration;
         config.motionProfileTrajectoryPeriod = 25;
+
+        config.slot0.kF = kF;
+        config.slot0.kP = kP;
+        config.slot0.kI = kI;
+        config.slot0.kD = kD;
+
+        config.slot1.kF = kF_TURN;
+        config.slot1.kP = kP_TURN;
+        config.slot1.kI = kI_TURN;
+        config.slot1.kD = kD_TURN;
 
         configAllSettings(config);
 

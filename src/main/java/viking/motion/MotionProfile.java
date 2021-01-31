@@ -94,11 +94,12 @@ public class MotionProfile {
 
         for (int i = 0; i < profile.length; i++) {
             TrajectoryPoint point = new TrajectoryPoint();
+
             double position = getPositionEncoder(i);
-            double velocity = getVelocityEncoder(i) / 10;
-            double acceleration = getAccelerationEncoder(i) / 10;
+            double velocity = getVelocityEncoder(i);
+            double acceleration = getAccelerationEncoder(i);
             double heading = getHeadingIMU(i);
-            double angularVelocity = getAngularVelocityIMU(i) / 10;
+            double angularVelocity = getAngularVelocityIMU(i);
 
             point.timeDur = (int) (timeStep * 1000);
             point.position = position;
@@ -115,6 +116,7 @@ public class MotionProfile {
 
             buffer.Write(point);
         }
+        
         return buffer;
     }
 
