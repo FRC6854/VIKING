@@ -16,6 +16,7 @@ public final class MotionProfileUtil {
 
     /**
      * Load a motion profile from a CSV file
+     * PATHPLANNER FORMAT = (S,v,a,X,Y,w,r)
      * @param profileName The name of the profile to load
      * @return The profile as a BufferedTrajectoryPointStream
      */
@@ -39,8 +40,9 @@ public final class MotionProfileUtil {
                 states[i] = new Trajectory.State(
                     points.get(i)[0], 
                     points.get(i)[1], 
-                    points.get(i)[2], 
-                    new Pose2d(points.get(i)[3], points.get(i)[4], new Rotation2d(Units.degreesToRadians(points.get(i)[5]))), 
+                    points.get(i)[2],
+                    // Convert PathPlanner units to PathWeaver units
+                    new Pose2d(points.get(i)[3], 7 - points.get(i)[4], new Rotation2d(Units.degreesToRadians(points.get(i)[5]))), 
                     Units.degreesToRadians(points.get(i)[6])
                 );
             }
