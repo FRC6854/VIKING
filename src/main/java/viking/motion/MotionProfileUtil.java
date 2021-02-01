@@ -41,8 +41,8 @@ public final class MotionProfileUtil {
                     points.get(i)[0], 
                     points.get(i)[1], 
                     points.get(i)[2],
-                    // Convert PathPlanner units to PathWeaver units
-                    new Pose2d(points.get(i)[3], 7 - points.get(i)[4], new Rotation2d(Units.degreesToRadians(points.get(i)[5]))), 
+                    // Convert PathPlanner units to PathWeaver units for the simulation
+                    new Pose2d(points.get(i)[3], 8.203 - points.get(i)[4], new Rotation2d(Units.degreesToRadians(points.get(i)[5]))), 
                     Units.degreesToRadians(points.get(i)[6])
                 );
             }
