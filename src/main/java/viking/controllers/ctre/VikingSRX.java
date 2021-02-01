@@ -3,8 +3,6 @@ package viking.controllers.ctre;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
-import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class VikingSRX extends WPI_TalonSRX {
@@ -71,76 +69,6 @@ public class VikingSRX extends WPI_TalonSRX {
         */
         configMotionProfileTrajectoryPeriod(25);
         changeMotionControlFramePeriod(25);
-
-        // Zero Sensor
-        setSelectedSensorPosition(0);
-    }
-
-    /**
-     * Full constructor for VikingSRX
-     * @param id the CAN ID for the Talon SRX
-     * @param inverted is the motor inverted
-     * @param sensorPhase should the encoder be inverted
-     * @param device the type of encoder
-     * @param kF the F variable of PIDF[0]
-     * @param kP the P variable of PIDF[0]
-     * @param kI the I variable of PIDF[0]
-     * @param kD the D variable of PIDF[0]
-     * @param kF_TURN the F variable of PIDF[1]
-     * @param kP_TURN the P variable of PIDF[1]
-     * @param kI_TURN the I variable of PIDF[1]
-     * @param kD_TURN the D variable of PIDF[1]
-     * @param velocity the max velocity for Motion Magic
-     * @param acceleration the max acceleration for Motion Magic
-     * @param pigeon the VikingIMU for path following
-     * @param follower the device following the profile
-     */
-    public VikingSRX(int id, boolean inverted, boolean sensorPhase, 
-                            FeedbackDevice device, double kF, double kP, double kI, 
-                            double kD, double kF_TURN, double kP_TURN, double kI_TURN, 
-                            double kD_TURN, double velocity, double acceleration,
-                            VikingIMU pigeon, int follower) {
-
-        super(id);
-
-        configFactoryDefault();
-
-        TalonSRXConfiguration config = new TalonSRXConfiguration();
-
-        config.remoteFilter0.remoteSensorDeviceID = pigeon.getDeviceID();
-        config.remoteFilter0.remoteSensorSource = RemoteSensorSource.Pigeon_Yaw;
-        config.remoteFilter1.remoteSensorDeviceID = follower;
-        config.remoteFilter1.remoteSensorSource = RemoteSensorSource.TalonSRX_SelectedSensor;
-
-        config.diff0Term = FeedbackDevice.RemoteSensor1;
-        config.diff1Term = FeedbackDevice.IntegratedSensor;
-
-        config.primaryPID.selectedFeedbackSensor = FeedbackDevice.SensorDifference;
-        config.primaryPID.selectedFeedbackCoefficient = 0.5;
-
-        config.auxiliaryPID.selectedFeedbackSensor = FeedbackDevice.RemoteSensor0;
-
-        config.motionCruiseVelocity = velocity;
-        config.motionAcceleration = acceleration;
-        config.motionProfileTrajectoryPeriod = 25;
-
-        config.slot0.kF = kF;
-        config.slot0.kP = kP;
-        config.slot0.kI = kI;
-        config.slot0.kD = kD;
-
-        config.slot1.kF = kF_TURN;
-        config.slot1.kP = kP_TURN;
-        config.slot1.kI = kI_TURN;
-        config.slot1.kD = kD_TURN;
-
-        configAllSettings(config);
-
-        // Invert Power
-        setInverted(inverted);
-
-        // Invert Encoder
-        setSensorPhase(sensorPhase);
 
         // Zero Sensor
         setSelectedSensorPosition(0);
