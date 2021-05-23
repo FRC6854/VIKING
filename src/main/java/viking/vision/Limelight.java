@@ -1,5 +1,9 @@
-package viking;
+package viking.vision;
 
+import edu.wpi.first.hal.SimBoolean;
+import edu.wpi.first.hal.SimDevice;
+import edu.wpi.first.hal.SimDouble;
+import edu.wpi.first.hal.SimInt;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
@@ -7,7 +11,7 @@ public class Limelight {
 
 	private static Limelight instance = null;
 	private NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
-	
+
 	public static enum LightMode {
 		DEFAULT,
 		OFF,
@@ -19,51 +23,88 @@ public class Limelight {
 	private double cameraAngle = 0; // Unit in degrees
 	private double targetHeight = 0; // Height in meters
 
+	//simulation specific
+	private SimDevice sim_device;
+	private SimBoolean sim_valid_target;
+	private SimInt sim_led_mode;
+	private SimDouble sim_target_x, sim_target_y, sim_target_a;
+	private SimBoolean sim_cammode;
+	private SimDouble sim_pipeline;
+
+	public Limelight(){
+		sim_device = SimDevice.create("Limelight");
+		if(sim_device != null){
+			sim_valid_target = sim_device.createBoolean("valid_target", SimDevice.Direction.kInput, false);
+			sim_led_mode = sim_device.createInt("led_mode", SimDevice.Direction.kOutput, 0);
+			sim_target_x = sim_device.createDouble("target_x", SimDevice.Direction.kInput, 0.0);
+			sim_target_y = sim_device.createDouble("target_y", SimDevice.Direction.kInput, 0.0);
+			sim_target_a = sim_device.createDouble("target_a", SimDevice.Direction.kInput, 0.0);
+			sim_cammode = sim_device.createBoolean("cammode", SimDevice.Direction.kOutput, false);
+			sim_pipeline = sim_device.createDouble("pipeline", SimDevice.Direction.kOutput, 0);
+		}
+	}
+
 	/**
 	 * Whether the limelight has any valid targets (0 or 1)
 	 * @return Returns true if vision target is found
 	 */
 	public boolean validTargets(){
-		double value = limelight.getEntry("tv").getDouble(0);
-	
-		if(value >= 1){
-		return true;
+		if(sim_device != null){
+			return sim_valid_target.get();
 		}
-	
+
+		double value = limelight.getEntry("tv").getDouble(0);
+
+		if(value >= 1){
+			return true;
+		}
+
 		return false;
 	}
-	
+
 	/**
-	 * Horizontal Offset From Crosshair To Target 
+	 * Horizontal Offset From Crosshair To Target
 	 * (LL1: -27 degrees to 27 degrees | LL2: -29.8 to 29.8 degrees)
 	 * @return x value of target relative to the crosshair
 	 */
 	public double targetX() {
+		if(sim_device != null){
+			return sim_target_x.get();
+		}
 		return limelight.getEntry("tx").getDouble(0);
 	}
-	
+
 	/**
-	 * Vertical Offset From Crosshair To Target 
+	 * Vertical Offset From Crosshair To Target
 	 * (LL1: -20.5 degrees to 20.5 degrees | LL2: -24.85 to 24.85 degrees)
 	 * @return y value of target relative to the crosshair
 	 */
 	public double targetY() {
+		if(sim_device != null){
+			return sim_target_y.get();
+		}
 		return limelight.getEntry("ty").getDouble(0);
 	}
-	
+
 	/**
 	 * Target Area (0% of image to 100% of image)
 	 * @return target area in percentage
 	 */
 	public double targetA() {
+		if(sim_device != null){
+			return sim_target_a.get();
+		}
 		return limelight.getEntry("ty").getDouble(0);
 	}
-	
+
 	/**
 	 * True active pipeline index of the camera (0 .. 9)
 	 * @return active pipeline currently used by the Limelight
 	 */
 	public double getPipeline() {
+		if(sim_device != null){
+			return sim_pipeline.get();
+		}
 		return limelight.getEntry("getpipe").getDouble(0);
 	}
 
@@ -72,19 +113,27 @@ public class Limelight {
 	 * @param value the value to set the camMode to
 	 */
 	public void setDriverMode(boolean value) {
-		if (value == true) {
-		limelight.getEntry("camMode").setDouble(1);
+		if(sim_device != null){
+			sim_cammode.set(value);
+			return;
 		}
-		else { 
-		limelight.getEntry("camMode").setDouble(0);
+
+		if (value == true) {
+			limelight.getEntry("camMode").setDouble(1);
+		} else {
+			limelight.getEntry("camMode").setDouble(0);
 		}
 	}
-	
+
 	/**
 	 * Get the current camMode
 	 * @return 0 means normal and 1 means driver mode
 	 */
 	public double driverMode() {
+		if(sim_device != null){
+			return sim_cammode.get() ? 1 : 0;
+		}
+
 		return limelight.getEntry("camMode").getDouble(0);
 	}
 
@@ -93,26 +142,37 @@ public class Limelight {
 	 * @param mode set the mode to either DEFAULT, OFF, BLINK, or ON
 	 */
 	public void setLEDMode(LightMode mode) {
+		int ledmode = 0;
 		switch(mode) {
-		case DEFAULT:
-			limelight.getEntry("ledMode").setNumber(0);
-			break;
-		case OFF:
-			limelight.getEntry("ledMode").setNumber(1);
-			break;
-		case BLINK:
-			limelight.getEntry("ledMode").setNumber(2);
-			break;
-		case ON:
-			limelight.getEntry("ledMode").setNumber(3);
-			break;
+			case DEFAULT:
+				ledmode = 0;
+				break;
+			case OFF:
+				ledmode = 1;
+				break;
+			case BLINK:
+				ledmode = 2;
+				break;
+			case ON:
+				ledmode = 3;
+				break;
 		}
+
+		if(sim_device != null){
+			sim_led_mode.set(ledmode);
+			return;
+		}
+
+		limelight.getEntry("ledMode").setNumber(ledmode);
 	}
-	
+
 	/**
 	 * Set the vision pipeline
 	 */
 	public void setPipeline(int pipelineID) {
+		if(sim_device != null){
+			sim_pipeline.set(pipelineID);
+		}
 		limelight.getEntry("pipeline").setNumber(pipelineID);
 	}
 
@@ -139,7 +199,7 @@ public class Limelight {
 	public void setTargetHeight(double height) {
 		targetHeight = height;
 	}
-	
+
 	/**
 	 * Uses current targetY to calculate the distance to the target
 	 * @return the distance to the target in inches (estimation)
@@ -147,7 +207,7 @@ public class Limelight {
 	public double getDistanceFromTarget() {
 		return (targetHeight - cameraHeight) / Math.tan(cameraAngle - targetY());
 	}
-	
+
 	/**
 	 * Uses the FOV and the current targetX to calculate the X angle to the target
 	 * @return
@@ -158,8 +218,9 @@ public class Limelight {
 	}
 
 	public static Limelight getInstance () {
-		if (instance == null)
-		instance = new Limelight();
+		if (instance == null){
+			instance = new Limelight();
+		}
 		return instance;
 	}
 }

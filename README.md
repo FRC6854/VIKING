@@ -18,7 +18,7 @@ Includes support for X-Box One Controller with pre-made inverts for proper value
 Read paths from CSV files and also create logs in CSV format for debugging.
 
 ### Limelight
-`viking.Limelight`
+`viking.vision.Limelight`
 
 A wrapper for the Limelight using NetworkTables.
 
