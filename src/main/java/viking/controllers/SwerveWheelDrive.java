@@ -8,57 +8,57 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 public class SwerveWheelDrive {
 
-    public enum SwerveWheelDriveType {
-        TalonSRX,
-        Spark,
-        VictorSPX
-    }
+	public enum SwerveWheelDriveType {
+		TalonSRX,
+		Spark,
+		VictorSPX
+	}
 
-    SwerveWheelDriveType type;
+	SwerveWheelDriveType type;
 
-    SpeedController controller;
+	SpeedController controller;
 
-    public SwerveWheelDrive(SwerveWheelDriveType type, int id, boolean inverted) {
-        if (type == SwerveWheelDriveType.TalonSRX) {
+	public SwerveWheelDrive(SwerveWheelDriveType type, int id, boolean inverted) {
+		if (type == SwerveWheelDriveType.TalonSRX) {
 
-            // Create TalonSRX object with the ID from the constructor
-            WPI_TalonSRX drive = new WPI_TalonSRX(id);
+			// Create TalonSRX object with the ID from the constructor
+			WPI_TalonSRX drive = new WPI_TalonSRX(id);
 
-            drive.configFactoryDefault();
+			drive.configFactoryDefault();
 
-            // Invert the motor depending on the inverted value
-            drive.setInverted(inverted);
+			// Invert the motor depending on the inverted value
+			drive.setInverted(inverted);
 
-            // WPI_TalonSRX can be passed into many different WPILib objects like the SpeedController
-            controller = drive;
+			// WPI_TalonSRX can be passed into many different WPILib objects like the SpeedController
+			controller = drive;
 
-        } else if (type == SwerveWheelDriveType.Spark) {
+		} else if (type == SwerveWheelDriveType.Spark) {
 
-            // Create Spark object with the ID from the constructor
-            Spark drive = new Spark(id);
+			// Create Spark object with the ID from the constructor
+			Spark drive = new Spark(id);
 
-            // Invert the motor depending on the inverted value
-            drive.setInverted(inverted);
+			// Invert the motor depending on the inverted value
+			drive.setInverted(inverted);
 
-            // Spark is a WPILib object so it can be passed into many different WPILib objects like the SpeedController
-            controller = drive;
+			// Spark is a WPILib object so it can be passed into many different WPILib objects like the SpeedController
+			controller = drive;
 
-        } else if (type == SwerveWheelDriveType.VictorSPX) {
+		} else if (type == SwerveWheelDriveType.VictorSPX) {
 
-            // Create VictorSPX object with the ID from the constructor
-            WPI_VictorSPX drive = new WPI_VictorSPX(id);
+			// Create VictorSPX object with the ID from the constructor
+			WPI_VictorSPX drive = new WPI_VictorSPX(id);
 
-            drive.configFactoryDefault();
+			drive.configFactoryDefault();
 
-            // Invert the motor depending on the inverted value
-            drive.setInverted(inverted);
-            
-            // WPI_VictorSPX can be passed into many different WPILib objects like the SpeedController
-            controller = drive;
-        }
-    }
+			// Invert the motor depending on the inverted value
+			drive.setInverted(inverted);
 
-    public void setSpeed(double speed) {
-        controller.set(speed);
-    }
+			// WPI_VictorSPX can be passed into many different WPILib objects like the SpeedController
+			controller = drive;
+		}
+	}
+
+	public void setSpeed(double speed) {
+		controller.set(speed);
+	}
 }
