@@ -62,16 +62,6 @@ Wrapper for CANSparkMAX from REV Robotics. Includes easy to use controls + close
 
 Wrapper for ColorSensorV3 from REV Robotics. Comes with matcher for detecting colours from the sensor output.
 
-### LED Controller
-`viking.led.LEDController`
-
-Controls current LED mode.
-
-### LED Mappings
-`viking.led.LEDMappings`
-
-LED codes for certain patterns on the Arduino side code e.g. `a` means Red Full Colour.
-
 ### Math
 `viking.math`
 
