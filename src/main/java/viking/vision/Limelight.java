@@ -3,7 +3,7 @@ package viking.vision;
 import edu.wpi.first.hal.SimBoolean;
 import edu.wpi.first.hal.SimDevice;
 import edu.wpi.first.hal.SimDouble;
-import edu.wpi.first.hal.SimInt;
+import edu.wpi.first.hal.SimEnum;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
@@ -26,20 +26,28 @@ public class Limelight {
 	//simulation specific
 	private SimDevice sim_device;
 	private SimBoolean sim_valid_target;
-	private SimInt sim_led_mode;
+	private SimEnum sim_led_mode;
 	private SimDouble sim_target_x, sim_target_y, sim_target_a;
-	private SimBoolean sim_cammode;
+	private SimEnum sim_cammode;
 	private SimDouble sim_pipeline;
 
 	public Limelight(){
 		sim_device = SimDevice.create("Limelight");
 		if(sim_device != null){
 			sim_valid_target = sim_device.createBoolean("valid_target", SimDevice.Direction.kInput, false);
-			sim_led_mode = sim_device.createInt("led_mode", SimDevice.Direction.kOutput, 0);
+			String ledmode_str[] = new String[4];
+			ledmode_str[0] = "Default";
+			ledmode_str[1] = "Off";
+			ledmode_str[2] = "Blink";
+			ledmode_str[3] = "On";
+			sim_led_mode = sim_device.createEnum("led_mode", SimDevice.Direction.kOutput, ledmode_str, 0);
 			sim_target_x = sim_device.createDouble("target_x", SimDevice.Direction.kInput, 0.0);
 			sim_target_y = sim_device.createDouble("target_y", SimDevice.Direction.kInput, 0.0);
 			sim_target_a = sim_device.createDouble("target_a", SimDevice.Direction.kInput, 0.0);
-			sim_cammode = sim_device.createBoolean("cammode", SimDevice.Direction.kOutput, false);
+			String cammode_str[] = new String[2];
+			cammode_str[0] = "Vision Processor";
+			cammode_str[1] = "Driver Camera";
+			sim_cammode = sim_device.createEnum("cammode", SimDevice.Direction.kOutput, cammode_str, 0);
 			sim_pipeline = sim_device.createDouble("pipeline", SimDevice.Direction.kOutput, 0);
 		}
 	}
@@ -114,7 +122,7 @@ public class Limelight {
 	 */
 	public void setDriverMode(boolean value) {
 		if(sim_device != null){
-			sim_cammode.set(value);
+			sim_cammode.set(value ? 1 : 0);
 			return;
 		}
 
@@ -131,7 +139,7 @@ public class Limelight {
 	 */
 	public double driverMode() {
 		if(sim_device != null){
-			return sim_cammode.get() ? 1 : 0;
+			return sim_cammode.get();
 		}
 
 		return limelight.getEntry("camMode").getDouble(0);
