@@ -3,7 +3,7 @@ package viking;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class Controller {
-		
+
 	private XboxController controller;
 
 	private double lTriggerDeadband = 0;
@@ -20,48 +20,54 @@ public class Controller {
 	}
 
 	public double getControllerLeftStickX() {
-		if (Math.abs(controller.getRawAxis(0)) < lJoystickDeadbandX) return 0;
+		if (Math.abs(controller.getRawAxis(0)) < lJoystickDeadbandX)
+			return 0;
 		return controller.getRawAxis(0);
 	}
 
 	public double getControllerLeftStickY() {
-		if (Math.abs(controller.getRawAxis(1) * -1) < lJoystickDeadbandY) return 0;
+		if (Math.abs(controller.getRawAxis(1) * -1) < lJoystickDeadbandY)
+			return 0;
 		return controller.getRawAxis(1) * -1;
 	}
 
 	public double getControllerRightStickX() {
-		if (Math.abs(controller.getRawAxis(4)) < rJoystickDeadbandX) return 0;
+		if (Math.abs(controller.getRawAxis(4)) < rJoystickDeadbandX)
+			return 0;
 		return controller.getRawAxis(4);
 	}
 
 	public double getControllerRightStickY() {
-		if (Math.abs(controller.getRawAxis(5)) < rJoystickDeadbandY) return 0;
+		if (Math.abs(controller.getRawAxis(5)) < rJoystickDeadbandY)
+			return 0;
 		return controller.getRawAxis(5);
 	}
 
 	public double getControllerLTrigger() {
-		if (Math.abs(controller.getRawAxis(2)) < lTriggerDeadband) return 0;
+		if (Math.abs(controller.getRawAxis(2)) < lTriggerDeadband)
+			return 0;
 		return controller.getRawAxis(2);
 	}
 
 	public double getControllerRTrigger() {
-		if (Math.abs(controller.getRawAxis(3)) < rTriggerDeadband) return 0;
+		if (Math.abs(controller.getRawAxis(3)) < rTriggerDeadband)
+			return 0;
 		return controller.getRawAxis(3);
 	}
 
-	public boolean getControllerLBumperPressed(){
+	public boolean getControllerLBumperPressed() {
 		return controller.getRawButtonPressed(5);
 	}
 
-	public boolean getControllerLBumper(){
+	public boolean getControllerLBumper() {
 		return controller.getRawButton(5);
 	}
 
-	public boolean getControllerRBumperPressed(){
+	public boolean getControllerRBumperPressed() {
 		return controller.getRawButtonPressed(6);
 	}
 
-	public boolean getControllerRBumper(){
+	public boolean getControllerRBumper() {
 		return controller.getRawButton(6);
 	}
 
@@ -88,12 +94,12 @@ public class Controller {
 	public boolean getControllerYButtonPressed() {
 		return controller.getYButtonPressed();
 	}
-	
+
 	public boolean getControllerStartButtonPressed() {
 		return controller.getStartButtonPressed();
 	}
 
-	public boolean getControllerStartButton(){
+	public boolean getControllerStartButton() {
 		return controller.getStartButton();
 	}
 

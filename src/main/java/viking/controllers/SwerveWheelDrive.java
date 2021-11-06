@@ -2,17 +2,12 @@ package viking.controllers;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
 
 public class SwerveWheelDrive {
 
-	public enum SwerveWheelDriveType {
-		TalonSRX,
-		Spark,
-		VictorSPX
-	}
+	public enum SwerveWheelDriveType { TalonSRX, Spark, VictorSPX }
 
 	SwerveWheelDriveType type;
 
@@ -29,7 +24,8 @@ public class SwerveWheelDrive {
 			// Invert the motor depending on the inverted value
 			drive.setInverted(inverted);
 
-			// WPI_TalonSRX can be passed into many different WPILib objects like the SpeedController
+			// WPI_TalonSRX can be passed into many different WPILib objects like the
+			// SpeedController
 			controller = drive;
 
 		} else if (type == SwerveWheelDriveType.Spark) {
@@ -40,7 +36,8 @@ public class SwerveWheelDrive {
 			// Invert the motor depending on the inverted value
 			drive.setInverted(inverted);
 
-			// Spark is a WPILib object so it can be passed into many different WPILib objects like the SpeedController
+			// Spark is a WPILib object so it can be passed into many different WPILib objects like
+			// the SpeedController
 			controller = drive;
 
 		} else if (type == SwerveWheelDriveType.VictorSPX) {
@@ -53,7 +50,8 @@ public class SwerveWheelDrive {
 			// Invert the motor depending on the inverted value
 			drive.setInverted(inverted);
 
-			// WPI_VictorSPX can be passed into many different WPILib objects like the SpeedController
+			// WPI_VictorSPX can be passed into many different WPILib objects like the
+			// SpeedController
 			controller = drive;
 		}
 	}

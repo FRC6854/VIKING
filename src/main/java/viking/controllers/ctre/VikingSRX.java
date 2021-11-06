@@ -33,9 +33,9 @@ public class VikingSRX extends WPI_TalonSRX {
 	 * @param velocity the max velocity for Motion Magic
 	 * @param acceleration the max acceleration for Motion Magic
 	 */
-	public VikingSRX(int id, boolean inverted, boolean sensorPhase,
-							FeedbackDevice device, double kF, double kP, double kI,
-							double kD, double velocity, double acceleration) {
+	public VikingSRX(int id, boolean inverted, boolean sensorPhase, FeedbackDevice device,
+					 double kF, double kP, double kI, double kD, double velocity,
+					 double acceleration) {
 
 		super(id);
 
@@ -61,12 +61,13 @@ public class VikingSRX extends WPI_TalonSRX {
 		configMotionCruiseVelocity(1250);
 		configMotionAcceleration(1500);
 
-		/*
-			--------------
-			Motion Profile
-			--------------
-			In our case we must use the value 25ms for both since in our profile we use a delta time of 50ms
-		*/
+		/**
+		 * --------------
+		 * Motion Profile
+		 * --------------
+		 * In our case we must use the value 25ms for both since in our profile we use a delta time
+		 * of 50ms
+		 */
 		configMotionProfileTrajectoryPeriod(25);
 		changeMotionControlFramePeriod(25);
 
@@ -90,20 +91,12 @@ public class VikingSRX extends WPI_TalonSRX {
 		set(ControlMode.MotionMagic, ticks);
 	}
 
-	public void setNeutralMode(NeutralMode mode) {
-		setNeutralMode(mode);
-	}
-
 	public double getTicks() {
 		return getSelectedSensorPosition();
 	}
 
 	public double getVelocity() {
 		return getSelectedSensorVelocity();
-	}
-
-	public ControlMode getControlMode() {
-		return getControlMode();
 	}
 
 	public void zeroSensor() {

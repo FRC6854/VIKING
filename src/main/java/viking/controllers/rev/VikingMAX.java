@@ -20,9 +20,8 @@ public class VikingMAX extends CANSparkMax {
 	 * @param velocity max velocity for smart motion
 	 * @param acceleration max acceleration for smart motion
 	 */
-	public VikingMAX(int id, boolean inverted,
-							double kF, double kP, double kI,
-							double kD, double velocity, double acceleration) {
+	public VikingMAX(int id, boolean inverted, double kF, double kP, double kI, double kD,
+					 double velocity, double acceleration) {
 
 		super(id, MotorType.kBrushless);
 

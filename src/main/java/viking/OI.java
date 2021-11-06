@@ -1,11 +1,10 @@
 package viking;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.DriverStation;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class OI {
 	private static OI instance = null;
@@ -18,15 +17,14 @@ public class OI {
 
 	public OI() {
 		ds = DriverStation.getInstance();
-		
+
 		try {
 			// Init the SerialPort on baud 9600
 			arduino = new SerialPort(9600, SerialPort.Port.kUSB1);
 
 			// Set connected to be false
 			connected = true;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.out.print("Failed to connect to Arduino: ");
 			System.out.println(e.toString());
 		}
@@ -44,8 +42,9 @@ public class OI {
 			// Write the number to the Serial Channel
 			arduino.writeString(Character.toString(data));
 
-			// Since the output buffer is 8 bytes and we usually only print 2 bytes, we must flush the buffer to send the line
-			// The limitation of this is that we can only send up to 99,999,999
+			// Since the output buffer is 8 bytes and we usually only print 2 bytes, we must flush
+			// the buffer to send the line The limitation of this is that we can only send up to
+			// 99,999,999
 			arduino.flush();
 
 			// Read the current line of text in the Serial Channel
@@ -53,20 +52,19 @@ public class OI {
 		}
 	}
 
-	public static String getCurrentSystemTimeDate (boolean isFile) {
+	public static String getCurrentSystemTimeDate(boolean isFile) {
 		DateTimeFormatter formatter;
 
 		if (isFile) {
 			formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
-		}
-		else {
+		} else {
 			formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm.ss");
 		}
 
 		return formatter.format(LocalDateTime.now());
 	}
 
-	public static OI getInstance () {
+	public static OI getInstance() {
 		if (instance == null)
 			instance = new OI();
 		return instance;

@@ -41,12 +41,9 @@ public class PIDController {
 	/**
 	 * Instantiates a new PID controller.
 	 *
-	 * @param p
-	 *            the p
-	 * @param i
-	 *            the i
-	 * @param d
-	 *            the d
+	 * @param p the p
+	 * @param i the i
+	 * @param d the d
 	 */
 	public PIDController(double p, double i, double d) {
 		errorSum = 0; // initialize errorSum to 0
@@ -82,12 +79,9 @@ public class PIDController {
 	/**
 	 * Change PID gains.
 	 *
-	 * @param kP
-	 *            the k P
-	 * @param kI
-	 *            the k I
-	 * @param kD
-	 *            the k D
+	 * @param kP the k P
+	 * @param kI the k I
+	 * @param kD the k D
 	 */
 	public void changePIDGains(double kP, double kI, double kD) {
 		pGain = kP;
@@ -98,21 +92,18 @@ public class PIDController {
 	/**
 	 * Calc PID.
 	 *
-	 * @param setPoint
-	 *            the set point
-	 * @param currentValue
-	 *            the current value
-	 * @param epsilon
-	 *            the epsilon
+	 * @param setPoint the set point
+	 * @param currentValue the current value
+	 * @param epsilon the epsilon
 	 * @return the double
 	 */
 	public double calcPID(double setPoint, double currentValue, double epsilon) {
 		error = setPoint - currentValue;
 
 		if (Math.abs(error) <= epsilon) {
-		atTarget = true;
+			atTarget = true;
 		} else {
-		atTarget = false;
+			atTarget = false;
 		}
 
 		// P
@@ -133,7 +124,7 @@ public class PIDController {
 
 		// Scale output to be between 1 and -1
 		if (output != 0.0)
-		output = output / Math.abs(output) * (1.0 - Math.pow(0.1, (Math.abs(output))));
+			output = output / Math.abs(output) * (1.0 - Math.pow(0.1, (Math.abs(output))));
 
 		return output;
 	}
@@ -141,23 +132,20 @@ public class PIDController {
 	/**
 	 * Calc PID velocity.
 	 *
-	 * @param setPoint
-	 *            the set point
-	 * @param currentValue
-	 *            the current value
-	 * @param epsilon
-	 *            the epsilon
-	 * @param iStart
-	 *            the i start
+	 * @param setPoint the set point
+	 * @param currentValue the current value
+	 * @param epsilon the epsilon
+	 * @param iStart the i start
 	 * @return the double
 	 */
-	public double calcPIDVelocity(double setPoint, double currentValue, double epsilon, double iStart) {
+	public double calcPIDVelocity(double setPoint, double currentValue, double epsilon,
+								  double iStart) {
 		error = setPoint - currentValue;
 
 		if (Math.abs(error) <= epsilon) {
-		atTarget = true;
+			atTarget = true;
 		} else {
-		atTarget = false;
+			atTarget = false;
 		}
 
 		// P
@@ -167,14 +155,14 @@ public class PIDController {
 
 		// 0.60
 		if (currentValue >= setPoint * iStart) {
-		errorSum += error;
-		iOut = iGain * errorSum;
+			errorSum += error;
+			iOut = iGain * errorSum;
 
-		currentAverage = (previousValue + currentValue) / 2;
-		average = (currentAverage + previousAverage) / 2;
-		SmartDashboard.putNumber("average", average);
+			currentAverage = (previousValue + currentValue) / 2;
+			average = (currentAverage + previousAverage) / 2;
+			SmartDashboard.putNumber("average", average);
 		} else {
-		iOut = 0;
+			iOut = 0;
 		}
 
 		// D
@@ -190,7 +178,7 @@ public class PIDController {
 
 		// Scale output to be between 1 and -1
 		if (output != 0.0)
-		output = output / Math.abs(output) * (1.0 - Math.pow(0.1, (Math.abs(output))));
+			output = output / Math.abs(output) * (1.0 - Math.pow(0.1, (Math.abs(output))));
 
 		return output;
 	}

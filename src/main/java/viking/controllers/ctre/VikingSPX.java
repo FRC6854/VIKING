@@ -39,8 +39,4 @@ public class VikingSPX extends WPI_VictorSPX {
 	public void percentOutput(double value) {
 		set(ControlMode.PercentOutput, value);
 	}
-
-	public ControlMode getControlMode() {
-		return getControlMode();
-	}
 }
