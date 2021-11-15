@@ -47,11 +47,6 @@ Wrapper for VictorSPX from CTRE. Includes easy to use controls + ability to foll
 
 Wrapper for TalonSRX from CTRE. Includes easy to use controls + closed-loop control + motion profiling.
 
-### VikingPigeon
-`viking.controllers.ctre.VikingPigeon`
-
-Wrapper for PigeonIMU from CTRE. More features to come in future updates when we actually get a PigeonIMU.
-
 ### VikingMAX
 `viking.controllers.rev.VikingMAX`
 
