@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package viking.math;
 
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
