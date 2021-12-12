@@ -12,9 +12,9 @@ public class UnitConversion {
 	 * @param positionMeters in meters
 	 * @return native unit sensor counts
 	 */
-	public static int distanceToNativeUnits(double positionMeters) {
-		double wheelRotations = positionMeters / Constants.DRIVETRAIN_kMetersPerRevolution;
-		int sensorCounts = (int) (wheelRotations * Constants.DRIVETRAIN_kCPR);
+	public static int distanceToNativeUnits(double positionMeters, double metersPerRevolution, double countPerRotation) {
+		double wheelRotations = positionMeters / metersPerRevolution;
+		int sensorCounts = (int) (wheelRotations * countPerRotation);
 		return sensorCounts;
 	}
 
@@ -24,10 +24,10 @@ public class UnitConversion {
 	 * @param velocityMetersPerSecond
 	 * @return native unit sensor count per 100ms
 	 */
-	public static int velocityToNativeUnits(double velocityMetersPerSecond) {
-		double wheelRotationsPerSecond = velocityMetersPerSecond / Constants.DRIVETRAIN_kMetersPerRevolution;
+	public static int velocityToNativeUnits(double velocityMetersPerSecond, double metersPerRevolution, double countPerRotation) {
+		double wheelRotationsPerSecond = velocityMetersPerSecond / metersPerRevolution;
 		double motorRotationsPer100ms = wheelRotationsPerSecond / 10;
-		int sensorCountsPer100ms = (int) (motorRotationsPer100ms * Constants.DRIVETRAIN_kCPR);
+		int sensorCountsPer100ms = (int) (motorRotationsPer100ms * countPerRotation);
 		return sensorCountsPer100ms;
 	}
 
@@ -37,9 +37,9 @@ public class UnitConversion {
 	 * @param sensorCounts from getSelectedSensorPosition()
 	 * @return position in meters
 	 */
-	public static double nativeUnitsToDistanceMeters(double sensorCounts) {
-		double motorRotations = (double) sensorCounts / Constants.DRIVETRAIN_kCPR;
-		double positionMeters = motorRotations * Constants.DRIVETRAIN_kMetersPerRevolution;
+	public static double nativeUnitsToDistanceMeters(double sensorCounts, double metersPerRevolution, double countPerRotation) {
+		double motorRotations = (double) sensorCounts / countPerRotation;
+		double positionMeters = motorRotations * metersPerRevolution;
 		return positionMeters;
 	}
 
@@ -49,10 +49,10 @@ public class UnitConversion {
 	 * @param sensorCountsPer100ms from getSelectedSensorVelocity()
 	 * @return velocity in meters per second
 	 */
-	public static double nativeUnitsToVelocityMetersPerSecond(double sensorCountsPer100ms) {
-		double motorRotationsPer100ms = sensorCountsPer100ms / Constants.DRIVETRAIN_kCPR;
+	public static double nativeUnitsToVelocityMetersPerSecond(double sensorCountsPer100ms, double metersPerRevolution, double countPerRotation) {
+		double motorRotationsPer100ms = sensorCountsPer100ms / countPerRotation;
 		double motorRotationsPerSecond = motorRotationsPer100ms * 10;
-		double velocityMetersPerSecond = motorRotationsPerSecond * Constants.DRIVETRAIN_kMetersPerRevolution;
+		double velocityMetersPerSecond = motorRotationsPerSecond * metersPerRevolution;
 		return velocityMetersPerSecond;
 	}
 }
