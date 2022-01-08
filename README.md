@@ -5,14 +5,14 @@ Reusable Systems for Robots
 A common library of useful classes and systems intended to be used for all Team 6854 robots
 The JitPack is based off of FRC 1540s library ROOSTER and you can go check it out [here](https://github.com/flamingchickens1540/ROOSTER).
 
-## What's Included in VIKING
+## VIKING library content
 
 ### Controller
 `viking.Controller`
 
-Includes support for X-Box One Controller with pre-made inverts for proper values.
+Includes support for XBox One Controller with pre-made inverts for proper values.
 
-### CSV File Manager
+### CSV File Manager (WIP)
 `viking.CSVFileManager`
 
 Read paths from CSV files and also create logs in CSV format for debugging.
@@ -62,6 +62,16 @@ Wrapper for ColorSensorV3 from REV Robotics. Comes with matcher for detecting co
 
 Full of math functions for swerve and other things.
 
+### MotionProfileUtil
+`viking.motion.MotionProfileUtil`
+
+Motion profile utility.
+
+### Logging
+`viking.Logging`
+
+Logging library, log to stdio or file with timestamp.
+
 ## Installation
 
 Add the library by adding these lines in your `build.gradle` file:
@@ -73,8 +83,7 @@ repositories {
 }
 
 dependencies {
-    // other dependencies
-    compile 'com.github.FRC6854:VIKING:<latest-release-tag>'
+    implementation 'com.github.FRC6854:VIKING:<latest-release-tag>'
 }
 ```
 
@@ -85,4 +94,4 @@ Make sure you have the following `vendordeps` added to your project.
 
 We use [JitPack](https://jitpack.io) as a Gradle/Maven repository. This means that if you add the project using Gradle it will be automatically updated with the latest changes to the `master` branch, as well as source code and documentation .jar files.
 
-If you want to see an example for how this is installed, check out the [2019 off-season robot code](https://github.com/FRC6854/2019OffSeasonRobot) and look in the `build.gradle` file.
+If you want to see an example for how this is installed, check out the [2021 Infinite Recharge Robot code](https://github.com/FRC6854/2021InfiniteRechargeOfficial) and look in the `build.gradle` file.
