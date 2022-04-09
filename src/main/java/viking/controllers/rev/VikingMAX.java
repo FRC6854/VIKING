@@ -1,14 +1,13 @@
 package viking.controllers.rev;
 
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 
 public class VikingMAX extends CANSparkMax {
 
-	private CANPIDController pidController = null;
-	private CANEncoder encoder = null;
+	private SparkMaxPIDController pidController = null;
+	private RelativeEncoder encoder = null;
 
 	/**
 	 * @param id the CAN ID for the Spark MAX
