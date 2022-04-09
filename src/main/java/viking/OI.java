@@ -1,7 +1,5 @@
 package viking;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.SerialPort;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,14 +7,12 @@ import java.time.format.DateTimeFormatter;
 public class OI {
 	private static OI instance = null;
 
-	private DriverStation ds;
 	private SerialPort arduino;
 
 	private static char lastCommandArduino = ' ';
 	private boolean connected = false;
 
 	public OI() {
-		ds = DriverStation.getInstance();
 
 		try {
 			// Init the SerialPort on baud 9600
@@ -28,10 +24,6 @@ public class OI {
 			System.out.print("Failed to connect to Arduino: ");
 			System.out.println(e.toString());
 		}
-	}
-
-	public Alliance getAlliance() {
-		return ds.getAlliance();
 	}
 
 	public void ledDataSerialPort(char data) {

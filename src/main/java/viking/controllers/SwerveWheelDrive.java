@@ -2,8 +2,8 @@ package viking.controllers;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 public class SwerveWheelDrive {
 
@@ -11,7 +11,7 @@ public class SwerveWheelDrive {
 
 	SwerveWheelDriveType type;
 
-	SpeedController controller;
+	MotorController controller;
 
 	public SwerveWheelDrive(SwerveWheelDriveType type, int id, boolean inverted) {
 		if (type == SwerveWheelDriveType.TalonSRX) {
