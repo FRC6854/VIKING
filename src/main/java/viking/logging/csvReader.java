@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class csvFileManager {
+public class csvReader {
 
     public static ArrayList<ArrayList<Double>> Reader (String filename) {
 
