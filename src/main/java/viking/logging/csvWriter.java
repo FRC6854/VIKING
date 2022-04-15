@@ -29,7 +29,12 @@ public class csvWriter {
         }
     }
 
-    // Append method that takes data to add to CSV
+    
+    /** 
+     * Writes new data to the bottom of the CSV 
+     * 
+     * @param row
+     */
     public void append(ArrayList<Double> row) {
         
         // Iterates through all the contents of the row arrayList and writes it onto the same row in the CSV.
@@ -48,18 +53,31 @@ public class csvWriter {
         pw.print("\n");
     }
 
-    // Method to flush the contents of the CSV file
+   
+    /**
+     * Method to flush the contents of the CSV file to buffer
+     * 
+     */
     public void flush() {
         pw.flush();
     }
 
-    // Method to call both append and flush methods
+    
+    /**
+     * Method to call both append and flush methods
+     * 
+     * @param row
+     */
     public void appendAndFlush(ArrayList<Double> row) {
         append(row);
         flush();
     }
 
-    // Method to close PrintWriter
+
+    /**
+     * Method to close PrintWriter
+     * 
+     */
     public void close() {
         pw.close();
     }
