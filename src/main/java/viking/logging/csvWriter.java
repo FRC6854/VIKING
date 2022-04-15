@@ -1,5 +1,10 @@
-import java.io.*;
-import java.util.*;
+package viking.logging;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class csvWriter {
 
