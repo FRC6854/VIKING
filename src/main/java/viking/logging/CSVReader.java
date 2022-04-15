@@ -8,6 +8,12 @@ import java.util.ArrayList;
 
 public class CSVReader {
 
+    /**
+     * Reads specified CSV file from top to bottom row and returns all values to a nested ArrayList ([[row1], [row2], [row3], [rowN]])
+     * 
+     * @param filename
+     * @return ArrayList<ArrayList<Double>>
+     */
     public static ArrayList<ArrayList<Double>> Reader (String filename) {
 
         String line; // Empty String variable to read the CSV values to
