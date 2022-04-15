@@ -1,4 +1,4 @@
-package viking;
+package viking.logging;
 
 import edu.wpi.first.wpilibj.Timer;
 
