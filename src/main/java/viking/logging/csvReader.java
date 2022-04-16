@@ -14,7 +14,7 @@ public class CSVReader {
      * @param filename
      * @return ArrayList<ArrayList<Double>>
      */
-    public static ArrayList<ArrayList<Double>> Read (String filename) {
+    public static ArrayList<ArrayList<Double>> read (String filename) {
 
         String line; // Empty String variable to read the CSV values to
         ArrayList<ArrayList<Double>> positionsArrayList = new ArrayList<>(); // ArrayList where positions coordinates are stored
