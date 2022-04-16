@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class csvReader {
+public class CSVReader {
 
     /**
      * Reads specified CSV file from top to bottom row and returns all values to a nested ArrayList ([[row1], [row2], [row3], [rowN]])
@@ -14,7 +14,7 @@ public class csvReader {
      * @param filename
      * @return ArrayList<ArrayList<Double>>
      */
-    public static ArrayList<ArrayList<Double>> Reader (String filename) {
+    public static ArrayList<ArrayList<Double>> Read (String filename) {
 
         String line; // Empty String variable to read the CSV values to
         ArrayList<ArrayList<Double>> positionsArrayList = new ArrayList<>(); // ArrayList where positions coordinates are stored
