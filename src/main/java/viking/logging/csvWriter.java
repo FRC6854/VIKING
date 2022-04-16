@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class csvWriter {
+public class CSVWriter {
 
     // Global object variables
     FileWriter fw;
@@ -14,7 +14,7 @@ public class csvWriter {
     PrintWriter pw;
 
     // Class constructor with filename as a parameter
-    public csvWriter(String filename) {
+    public CSVWriter(String filename) {
 
         // Opens file in overwrite mode and intiializes PrintWriter
         try {
