@@ -8,71 +8,54 @@ import java.util.ArrayList;
 
 public class CSVReader {
 
-    /**
-     * Reads specified CSV file from top to bottom row and returns all values to a nested ArrayList ([[row1], [row2], [row3], [rowN]])
-     * 
-     * @param filename
-     * @return ArrayList<ArrayList<Double>>
-     */
-    public static ArrayList<ArrayList<Double>> read (String filename) {
+	/**
+	 * Reads specified CSV file from top to bottom row and returns all values to a nested ArrayList ([[row1], [row2], [row3], [rowN]])
+	 * 
+	 * @param filename
+	 * @return ArrayList<ArrayList<Double>>
+	 */
+	public static ArrayList<ArrayList<Double>> read (String filename) {
 
-        String line; // Empty String variable to read the CSV values to
-        ArrayList<ArrayList<Double>> positionsArrayList = new ArrayList<>(); // ArrayList where positions coordinates are stored
+		String line; // Empty String variable to read the CSV values to
+		ArrayList<ArrayList<Double>> positionsArrayList = new ArrayList<>(); // ArrayList where positions coordinates are stored
 
-        try {
-            // Starts bufferedReader
-            BufferedReader br = new BufferedReader(new FileReader(filename)); 
+		try {
+			// Starts bufferedReader
+			BufferedReader br = new BufferedReader(new FileReader(filename)); 
 
-            // Read CSV top to bottom until there is a line that contains nothing
-            while ((line = br.readLine()) != null) { 
-                String[] values = line.split(",");
-                
-                // Converts string array into double array
-                ArrayList<Double> coordinates = new ArrayList<Double>();
+			// Read CSV top to bottom until there is a line that contains nothing
+			while ((line = br.readLine()) != null) { 
+				String[] values = line.split(",");
+				
+				// Converts string array into double array
+				ArrayList<Double> coordinates = new ArrayList<Double>();
 
-                // Iterates through String Array and converts position elements into doubles
-                for (int i = 0; i < values.length; i++) {
-                    coordinates.add(Double.parseDouble(values[i]));
-                }
-                
-                // Nests coordinates arrayList into the main arrayList
-                positionsArrayList.add(coordinates); 
+				// Iterates through String Array and converts position elements into doubles
+				for (int i = 0; i < values.length; i++) {
+					coordinates.add(Double.parseDouble(values[i]));
+				}
+				
+				// Nests coordinates arrayList into the main arrayList
+				positionsArrayList.add(coordinates); 
 
-            }
+			}
 
-            // Closes bufferedReader instance
-            br.close();
+			// Closes bufferedReader instance
+			br.close();
 
-        }
-        
-        // Exceptions
-        catch (FileNotFoundException e) {
-            System.out.println("[CSVReader] The CSV file could not be found.");
-            e.printStackTrace();
-        }
+		}
+		
+		// Exceptions
+		catch (FileNotFoundException e) {
+			System.out.println("[CSVReader] The CSV file could not be found.");
+			e.printStackTrace();
+		}
 
-        catch (IOException e) {
-            System.out.println("[CSVReader] IO error.");
-            e.printStackTrace();
-        }
+		catch (IOException e) {
+			System.out.println("[CSVReader] IO error.");
+			e.printStackTrace();
+		}
 
-        return positionsArrayList;
-
-    }
-
+		return positionsArrayList;
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
