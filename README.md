@@ -12,10 +12,15 @@ The JitPack is based off of FRC 1540s library ROOSTER and you can go check it ou
 
 Includes support for XBox One Controller with pre-made inverts for proper values.
 
-### CSV File Manager (WIP)
-`viking.CSVFileManager`
+### CSV Reader
+`viking.logging.CSVReader`
 
-Read paths from CSV files and also create logs in CSV format for debugging.
+Read paths and other data from CSV files.
+
+### CSV Writer
+`viking.logging.CSVWriter`
+
+Writes CSVs to record data for debugging purposes. 
 
 ### Limelight
 `viking.vision.Limelight`
