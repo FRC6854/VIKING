@@ -32,11 +32,6 @@ A wrapper for the Limelight using NetworkTables.
 
 Arduino Serial connection wrapper for LEDs, Date/Time formatter, and DriverStation code.
 
-### PID Controller
-`viking.controllers.PIDController`
-
-A custom PID Controller for closed-loop control on FRC robots. Probably will be deprecated in 2020 due to WPILib planning to add better PID Controller to their code.
-
 ### Swerve Wheel Drive
 `viking.controllers.SwerveWheelDrive`
 
