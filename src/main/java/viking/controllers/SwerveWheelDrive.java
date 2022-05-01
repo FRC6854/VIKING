@@ -5,6 +5,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
+/**
+ * Class dealing with the configuration of the swerve wheel drive system
+ */
 public class SwerveWheelDrive {
 
 	public enum SwerveWheelDriveType { TalonSRX, Spark, VictorSPX }
@@ -13,6 +16,12 @@ public class SwerveWheelDrive {
 
 	MotorController controller;
 
+	/**
+	 * Configures specified motor type for the swerve wheel drive system. 
+	 * @param type Motor type
+	 * @param id CAN ID
+	 * @param inverted Inverts the motor 
+	 */
 	public SwerveWheelDrive(SwerveWheelDriveType type, int id, boolean inverted) {
 		if (type == SwerveWheelDriveType.TalonSRX) {
 
@@ -56,6 +65,10 @@ public class SwerveWheelDrive {
 		}
 	}
 
+	/**
+	 * Sets speed of the swerve wheel drive motor controller
+	 * @param speed
+	 */
 	public void setSpeed(double speed) {
 		controller.set(speed);
 	}

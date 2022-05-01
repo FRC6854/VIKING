@@ -6,11 +6,15 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.util.Color;
 
+/**
+ * Class to communicate with the colour sensor and fetch accurate colours being reported from it using colour matching
+ */
 public class ColorSensor {
 
 	private ColorSensorV3 colorSensor = null;
 	private ColorMatch colorMatcher = new ColorMatch();
 
+	// Preset colour targets
 	private final Color kBlueTarget = new Color(0.143, 0.427, 0.429);
 	private final Color kGreenTarget = new Color(0.197, 0.561, 0.240);
 	private final Color kRedTarget = new Color(0.561, 0.232, 0.114);
@@ -25,12 +29,20 @@ public class ColorSensor {
 		colorMatcher.addColorMatch(kYellowTarget);
 	}
 
+	/**
+	 * Returns difference between reported colour from the sensor and the colour target
+	 * @return
+	 */
 	public double getColorConfidence() {
 		ColorMatchResult match = colorMatcher.matchClosestColor(getColorFromSensor());
 
 		return match.confidence;
 	}
 
+	/**
+	 * Matches reported RGB values from colour sensor to preset colour targets
+	 * @return
+	 */
 	public String getColor() {
 		ColorMatchResult match = colorMatcher.matchClosestColor(getColorFromSensor());
 
@@ -47,6 +59,10 @@ public class ColorSensor {
 		}
 	}
 
+	/**
+	 * Only gets RGB values reported from colour sensor
+	 * @return
+	 */
 	public Color getColorFromSensor() {
 		return colorSensor.getColor();
 	}

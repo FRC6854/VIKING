@@ -1,5 +1,8 @@
 package viking.math;
 
+/**
+ * Vector class deals with the construction of vectors and computating vector data such as vector direction and magnitude. 
+ */
 public class Vector {
 	public double direction;
 	public double magnitude;
@@ -15,6 +18,7 @@ public class Vector {
 		y = vec.y;
 	}
 
+
 	public Vector(double dir_x, double mag_y, boolean cartesian) {
 		if (cartesian == false) {
 			direction = dir_x;
@@ -29,6 +33,12 @@ public class Vector {
 		}
 	}
 
+	/**
+	 * Compute the direction of vector given the x and y coordinates of its tip on the cartesian plane
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	private double vectorDir(double x, double y) {
 		//"Normalizes" y by setting it to be within the boundaries of a unit circle
 		y = (y * (1 / genmath.hyplength(x, y)));
@@ -45,6 +55,11 @@ public class Vector {
 		}
 	}
 
+	/**
+	 * Combine two vectors into one larger vector
+	 * @param vec2
+	 * @return
+	 */
 	public Vector add(Vector vec2) {
 		double Vx = x + vec2.x;
 		double Vy = y + vec2.y;
@@ -52,6 +67,11 @@ public class Vector {
 		return new Vector(Vx, Vy, true);
 	}
 
+	/**
+	 * Makes new vector from difference between two vectors
+	 * @param vec2
+	 * @return
+	 */
 	public Vector subtract(Vector vec2) {
 		double Vx = x - vec2.x;
 		double Vy = y - vec2.y;

@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj.SerialPort;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class to deal with Arduino serial communications, LED strip communication, and fetching current system time
+ */
 public class OI {
 	private static OI instance = null;
 
@@ -26,6 +29,10 @@ public class OI {
 		}
 	}
 
+	/**
+	 * Writes LED data to Arduino over serial
+	 * @param data
+	 */
 	public void ledDataSerialPort(char data) {
 		if ((lastCommandArduino != data) && (connected == true)) {
 			// Set the last command to the command about to be sent
@@ -44,10 +51,15 @@ public class OI {
 		}
 	}
 
+	/**
+	 * Method to fetch current system time and format it
+	 * @param isFile
+	 * @return
+	 */
 	public static String getCurrentSystemTimeDate(boolean isFile) {
 		DateTimeFormatter formatter;
 
-		if (isFile) {
+		if (isFile) { // If datetime is used in a filename, use underscore to seperate date and time.
 			formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
 		} else {
 			formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm.ss");
@@ -56,6 +68,10 @@ public class OI {
 		return formatter.format(LocalDateTime.now());
 	}
 
+	/**
+	 * Starts OI instance
+	 * @return
+	 */
 	public static OI getInstance() {
 		if (instance == null)
 			instance = new OI();
