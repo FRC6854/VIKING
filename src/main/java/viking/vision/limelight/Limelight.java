@@ -1,4 +1,4 @@
-package viking.vision;
+package viking.vision.limelight;
 
 import edu.wpi.first.hal.SimBoolean;
 import edu.wpi.first.hal.SimDevice;
