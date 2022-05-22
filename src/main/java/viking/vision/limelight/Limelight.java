@@ -4,13 +4,11 @@ import edu.wpi.first.hal.SimBoolean;
 import edu.wpi.first.hal.SimDevice;
 import edu.wpi.first.hal.SimDouble;
 import edu.wpi.first.hal.SimEnum;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Limelight {
 
 	private static Limelight instance = null;
-	private NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
+	private LimelightComm limelight_comm = new LimelightComm();
 
 	public static enum LightMode { DEFAULT, OFF, BLINK, ON }
 
@@ -59,7 +57,7 @@ public class Limelight {
 			return sim_valid_target.get();
 		}
 
-		double value = limelight.getEntry("tv").getDouble(0);
+		double value = limelight_comm.get_entry_double("tv");
 
 		if (value >= 1) {
 			return true;
@@ -77,7 +75,7 @@ public class Limelight {
 		if (sim_device != null) {
 			return sim_target_x.get();
 		}
-		return limelight.getEntry("tx").getDouble(0);
+		return limelight_comm.get_entry_double("tx");
 	}
 
 	/**
@@ -89,7 +87,7 @@ public class Limelight {
 		if (sim_device != null) {
 			return sim_target_y.get();
 		}
-		return limelight.getEntry("ty").getDouble(0);
+		return limelight_comm.get_entry_double("ty");
 	}
 
 	/**
@@ -100,7 +98,7 @@ public class Limelight {
 		if (sim_device != null) {
 			return sim_target_a.get();
 		}
-		return limelight.getEntry("ty").getDouble(0);
+		return limelight_comm.get_entry_double("ta");
 	}
 
 	/**
@@ -111,7 +109,7 @@ public class Limelight {
 		if (sim_device != null) {
 			return sim_pipeline.get();
 		}
-		return limelight.getEntry("getpipe").getDouble(0);
+		return limelight_comm.get_entry_double("getpipe");
 	}
 
 	/**
@@ -125,9 +123,9 @@ public class Limelight {
 		}
 
 		if (value == true) {
-			limelight.getEntry("camMode").setDouble(1);
+			limelight_comm.set_entry_number("camMode", 1);
 		} else {
-			limelight.getEntry("camMode").setDouble(0);
+			limelight_comm.set_entry_number("camMode", 0);
 		}
 	}
 
@@ -135,12 +133,12 @@ public class Limelight {
 	 * Get the current camMode
 	 * @return 0 means normal and 1 means driver mode
 	 */
-	public double driverMode() {
+	public int driverMode() {
 		if (sim_device != null) {
 			return sim_cammode.get();
 		}
 
-		return limelight.getEntry("camMode").getDouble(0);
+		return limelight_comm.get_entry_number("camMode").intValue();
 	}
 
 	/**
@@ -169,7 +167,7 @@ public class Limelight {
 			return;
 		}
 
-		limelight.getEntry("ledMode").setNumber(ledmode);
+		limelight_comm.set_entry_number("ledMode", ledmode);
 	}
 
 	/**
@@ -180,7 +178,7 @@ public class Limelight {
 		if (sim_device != null) {
 			sim_pipeline.set(pipelineID);
 		}
-		limelight.getEntry("pipeline").setNumber(pipelineID);
+		limelight_comm.set_entry_number("pipeline", pipelineID);
 	}
 
 	/**
