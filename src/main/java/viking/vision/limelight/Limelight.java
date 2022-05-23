@@ -7,7 +7,6 @@ import edu.wpi.first.hal.SimEnum;
 
 public class Limelight {
 
-	private static Limelight instance = null;
 	private LimelightComm limelight_comm = new LimelightComm();
 
 	public static enum LightMode { DEFAULT, OFF, BLINK, ON }
@@ -220,12 +219,5 @@ public class Limelight {
 	public double getHorzAngle() {
 		double horzFOV = 59.6;
 		return Math.atan(Math.tan(Math.toRadians(horzFOV)) * targetX() / 160);
-	}
-
-	public static Limelight getInstance() {
-		if (instance == null) {
-			instance = new Limelight();
-		}
-		return instance;
 	}
 }
