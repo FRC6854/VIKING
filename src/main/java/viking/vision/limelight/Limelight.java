@@ -1,13 +1,9 @@
 package viking.vision.limelight;
 
-import edu.wpi.first.hal.SimBoolean;
-import edu.wpi.first.hal.SimDevice;
-import edu.wpi.first.hal.SimDouble;
-import edu.wpi.first.hal.SimEnum;
-
 public class Limelight {
 
-	private LimelightComm limelight_comm = new LimelightComm();
+	private LimelightComm limelight_comm = null;
+	private LimelightSimulator limelight_simulator = new LimelightSimulator();
 
 	public static enum LightMode { DEFAULT, OFF, BLINK, ON }
 
@@ -15,36 +11,12 @@ public class Limelight {
 	private double cameraAngle = 0; // Unit in degrees
 	private double targetHeight = 0; // Height in meters
 
-	// simulation specific
-	private SimDevice sim_device;
-	private SimBoolean sim_valid_target;
-	private SimEnum sim_led_mode;
-	private SimDouble sim_target_x, sim_target_y, sim_target_a;
-	private SimEnum sim_cammode;
-	private SimDouble sim_pipeline;
-
 	public Limelight() {
-		sim_device = SimDevice.create("Limelight");
-		if (sim_device != null) {
-			sim_valid_target
-				= sim_device.createBoolean("valid_target", SimDevice.Direction.kInput, false);
-			String ledmode_str[] = new String[4];
-			ledmode_str[0] = "Default";
-			ledmode_str[1] = "Off";
-			ledmode_str[2] = "Blink";
-			ledmode_str[3] = "On";
-			sim_led_mode
-				= sim_device.createEnum("led_mode", SimDevice.Direction.kOutput, ledmode_str, 0);
-			sim_target_x = sim_device.createDouble("target_x", SimDevice.Direction.kInput, 0.0);
-			sim_target_y = sim_device.createDouble("target_y", SimDevice.Direction.kInput, 0.0);
-			sim_target_a = sim_device.createDouble("target_a", SimDevice.Direction.kInput, 0.0);
-			String cammode_str[] = new String[2];
-			cammode_str[0] = "Vision Processor";
-			cammode_str[1] = "Driver Camera";
-			sim_cammode
-				= sim_device.createEnum("cammode", SimDevice.Direction.kOutput, cammode_str, 0);
-			sim_pipeline = sim_device.createDouble("pipeline", SimDevice.Direction.kOutput, 0);
-		}
+		limelight_comm = new LimelightComm();
+	}
+
+	public Limelight(String limelight_networktable_name) {
+		limelight_comm = new LimelightComm(limelight_networktable_name);
 	}
 
 	/**
@@ -52,8 +24,8 @@ public class Limelight {
 	 * @return Returns true if vision target is found
 	 */
 	public boolean validTargets() {
-		if (sim_device != null) {
-			return sim_valid_target.get();
+		if (limelight_simulator.is_simulation()) {
+			return limelight_simulator.get_valid_target();
 		}
 
 		double value = limelight_comm.get_entry_double("tv");
@@ -71,8 +43,8 @@ public class Limelight {
 	 * @return x value of target relative to the crosshair
 	 */
 	public double targetX() {
-		if (sim_device != null) {
-			return sim_target_x.get();
+		if (limelight_simulator.is_simulation()) {
+			return limelight_simulator.get_target_x();
 		}
 		return limelight_comm.get_entry_double("tx");
 	}
@@ -83,8 +55,8 @@ public class Limelight {
 	 * @return y value of target relative to the crosshair
 	 */
 	public double targetY() {
-		if (sim_device != null) {
-			return sim_target_y.get();
+		if (limelight_simulator.is_simulation()) {
+			return limelight_simulator.get_target_y();
 		}
 		return limelight_comm.get_entry_double("ty");
 	}
@@ -94,8 +66,8 @@ public class Limelight {
 	 * @return target area in percentage
 	 */
 	public double targetA() {
-		if (sim_device != null) {
-			return sim_target_a.get();
+		if (limelight_simulator.is_simulation()) {
+			return limelight_simulator.get_target_a();
 		}
 		return limelight_comm.get_entry_double("ta");
 	}
@@ -105,8 +77,8 @@ public class Limelight {
 	 * @return active pipeline currently used by the Limelight
 	 */
 	public double getPipeline() {
-		if (sim_device != null) {
-			return sim_pipeline.get();
+		if (limelight_simulator.is_simulation()) {
+			return limelight_simulator.get_pipeline();
 		}
 		return limelight_comm.get_entry_double("getpipe");
 	}
@@ -116,8 +88,8 @@ public class Limelight {
 	 * @param value the value to set the camMode to
 	 */
 	public void setDriverMode(boolean value) {
-		if (sim_device != null) {
-			sim_cammode.set(value ? 1 : 0);
+		if (limelight_simulator.is_simulation()) {
+			limelight_simulator.set_cammode(value ? 1 : 0);
 			return;
 		}
 
@@ -133,8 +105,8 @@ public class Limelight {
 	 * @return 0 means normal and 1 means driver mode
 	 */
 	public int driverMode() {
-		if (sim_device != null) {
-			return sim_cammode.get();
+		if (limelight_simulator.is_simulation()) {
+			return limelight_simulator.get_cammode();
 		}
 
 		return limelight_comm.get_entry_number("camMode").intValue();
@@ -161,8 +133,8 @@ public class Limelight {
 			break;
 		}
 
-		if (sim_device != null) {
-			sim_led_mode.set(ledmode);
+		if (limelight_simulator.is_simulation()) {
+			limelight_simulator.set_led_mode(ledmode);
 			return;
 		}
 
@@ -174,8 +146,9 @@ public class Limelight {
 	 * @param pipelineID ID of vision pipeline profile
 	 */
 	public void setPipeline(int pipelineID) {
-		if (sim_device != null) {
-			sim_pipeline.set(pipelineID);
+		if (limelight_simulator.is_simulation()) {
+			limelight_simulator.set_pipeline(pipelineID);
+			return;
 		}
 		limelight_comm.set_entry_number("pipeline", pipelineID);
 	}
