@@ -64,7 +64,7 @@ public class TelemetryLogger {
 
 	/**
 	 * Appends everything into log entries
-	 * @param entry All the data being stored in the TelemetryData class
+	 * @param data All the data being stored in the TelemetryData class
 	 */
 	public void append(TelemetryData data) {
 		isMoving.append(data.isMoving);      // is the robot moving?
