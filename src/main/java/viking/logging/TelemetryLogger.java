@@ -2,11 +2,13 @@ package viking.logging;
 
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.util.datalog.DataLog;
-import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.util.datalog.FloatLogEntry;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.util.datalog.BooleanLogEntry;
 
+/**
+ * Class for setting up log entries and appending data to it
+ */
 public class TelemetryLogger {
 	public TelemetryLogger() {
 		startDataManager();
@@ -61,27 +63,27 @@ public class TelemetryLogger {
 	}
 
 	/**
-	 * Appends everything
-	 * @param entry
+	 * Appends everything into log entries
+	 * @param entry All the data being stored in the TelemetryData class
 	 */
 	public void append(TelemetryData data) {
-		isMoving.append(data.isMoving);
-		isRotating.append(data.isRotating);
+		isMoving.append(data.isMoving);      // is the robot moving?
+		isRotating.append(data.isRotating); // is the robot rotating?
+		pitch.append(data.pitch);          // pitch
+		roll.append(data.roll);           // roll
+		yaw.append(data.yaw);            // yaw
 
-		pitch.append(data.pitch);
-		roll.append(data.roll);
-		yaw.append(data.yaw);
-		compassHeading.append(data.compassHeading);
-		linearAccelX.append(data.linearAccelX);
-		linearAccelY.append(data.linearAccelY);
-		linearAccelZ.append(data.linearAccelZ);
-		velocityX.append(data.velocityX);
-		velocityY.append(data.velocityY);
-		velocityZ.append(data.velocityZ);
-		displacementX.append(data.displacementX);
-		displacementY.append(data.displacementY);
-		displacementZ.append(data.displacementZ);
+		compassHeading.append(data.compassHeading); // compass heading
+		linearAccelX.append(data.linearAccelX);    // linear acceleration x
+		linearAccelY.append(data.linearAccelY);   // linear acceleration y
+		linearAccelZ.append(data.linearAccelZ);  // linear acceleration z
+		velocityX.append(data.velocityX);       // velocity on x-axis
+		velocityY.append(data.velocityY);      // velocity on y-axis
+		velocityZ.append(data.velocityZ);     // velocity on z-axis
 
+		displacementX.append(data.displacementX);   // displacement on the x-axis
+		displacementY.append(data.displacementY);  // displacement on the y-axis
+		displacementZ.append(data.displacementZ); // displacement on the z-axis
 		angle.append(data.angle);
 	}
 }

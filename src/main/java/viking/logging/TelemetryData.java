@@ -1,12 +1,15 @@
 package viking.logging;
 
+/**
+ * Telemetry data entry container
+ */
 public class TelemetryData {
 	public boolean isMoving;
 	public boolean isRotating; 
 
 	public float pitch; 
 	public float roll; 
-	public float raw; 
+	public float yaw; 
 	public float compassHeading; 
 	public float linearAccelX; 
 	public float linearAccelY; 
@@ -17,6 +20,6 @@ public class TelemetryData {
 	public float displacementX; 
 	public float displacementY;
 	public float displacementZ;
-	
+
 	public double angle; 
 }
