@@ -4,13 +4,14 @@ import edu.wpi.first.hal.SimBoolean;
 import edu.wpi.first.hal.SimDevice;
 import edu.wpi.first.hal.SimDouble;
 import edu.wpi.first.hal.SimEnum;
+import edu.wpi.first.hal.SimInt;
 
 class LimelightSimulator {
 
 	private SimDevice sim_device;
 	private SimBoolean sim_valid_target;
 	private SimDouble sim_target_x, sim_target_y, sim_target_a;
-	private SimDouble sim_pipeline;
+	private SimInt sim_pipeline;
 	private SimEnum sim_cammode;
 	private SimEnum sim_led_mode;
 
@@ -25,7 +26,7 @@ class LimelightSimulator {
 			sim_target_y = sim_device.createDouble("target_y", SimDevice.Direction.kInput, 0.0);
 			sim_target_a = sim_device.createDouble("target_a", SimDevice.Direction.kInput, 0.0);
 
-			sim_pipeline = sim_device.createDouble("pipeline", SimDevice.Direction.kOutput, 0);
+			sim_pipeline = sim_device.createInt("pipeline", SimDevice.Direction.kOutput, 0);
 
 			String cammode_str[] = new String[2];
 			cammode_str[0] = "Vision Processor";
@@ -63,7 +64,7 @@ class LimelightSimulator {
 		return sim_target_a.get();
 	}
 
-	public double get_pipeline() {
+	public int get_pipeline() {
 		return sim_pipeline.get();
 	}
 

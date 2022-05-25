@@ -76,11 +76,11 @@ public class Limelight {
 	 * True active pipeline index of the camera (0 .. 9)
 	 * @return active pipeline currently used by the Limelight
 	 */
-	public double getPipeline() {
+	public int getPipeline() {
 		if (limelight_simulator.is_simulation()) {
 			return limelight_simulator.get_pipeline();
 		}
-		return limelight_comm.get_entry_double("getpipe");
+		return (int)limelight_comm.get_entry_double("getpipe");
 	}
 
 	/**
