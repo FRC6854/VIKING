@@ -15,8 +15,11 @@ class LimelightSimulator {
 	private SimEnum sim_cammode;
 	private SimEnum sim_led_mode;
 
+	private static int instance_count = 0;
+
 	public LimelightSimulator() {
-		sim_device = SimDevice.create("Limelight");
+		sim_device = SimDevice.create("Limelight [" + instance_count + "]");
+		instance_count++;
 
 		if (sim_device != null) { // only construct while not in simulation
 			sim_valid_target
