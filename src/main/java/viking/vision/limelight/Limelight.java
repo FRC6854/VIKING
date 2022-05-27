@@ -3,7 +3,7 @@ package viking.vision.limelight;
 public class Limelight {
 
 	private LimelightComm limelight_comm = null;
-	private LimelightSimulator limelight_simulator = new LimelightSimulator();
+	private LimelightSimulator limelight_simulator = null;
 
 	public static enum LightMode { DEFAULT, OFF, BLINK, ON }
 
@@ -13,10 +13,17 @@ public class Limelight {
 
 	public Limelight() {
 		limelight_comm = new LimelightComm();
+		limelight_simulator = new LimelightSimulator();
 	}
 
 	public Limelight(String limelight_networktable_name) {
 		limelight_comm = new LimelightComm(limelight_networktable_name);
+		limelight_simulator = new LimelightSimulator();
+	}
+
+	public Limelight(String limelight_networktable_name, String position) {
+		limelight_comm = new LimelightComm(limelight_networktable_name);
+		limelight_simulator = new LimelightSimulator(position);
 	}
 
 	/**

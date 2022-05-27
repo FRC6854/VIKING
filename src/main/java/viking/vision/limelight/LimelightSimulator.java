@@ -17,10 +17,7 @@ class LimelightSimulator {
 
 	private static int instance_count = 0;
 
-	public LimelightSimulator() {
-		sim_device = SimDevice.create("Limelight [" + instance_count + "]");
-		instance_count++;
-
+	private void sim_device_init() {
 		if (sim_device != null) { // only construct while not in simulation
 			sim_valid_target
 				= sim_device.createBoolean("valid_target", SimDevice.Direction.kInput, false);
@@ -45,6 +42,20 @@ class LimelightSimulator {
 			sim_led_mode
 				= sim_device.createEnum("led_mode", SimDevice.Direction.kOutput, ledmode_str, 0);
 		}
+	}
+
+	public LimelightSimulator() {
+		sim_device = SimDevice.create("Limelight [" + instance_count + "]");
+		instance_count++;
+
+		sim_device_init();
+	}
+
+	public LimelightSimulator(String position) {
+		sim_device = SimDevice.create("Limelight [" + position + "]");
+		instance_count++;
+
+		sim_device_init();
 	}
 
 	public boolean is_simulation() {
