@@ -10,7 +10,8 @@ class LimelightSimulator {
 
 	private SimDevice sim_device;
 	private SimBoolean sim_valid_target;
-	private SimDouble sim_target_x, sim_target_y, sim_target_a;
+	private SimDouble sim_target_x, sim_target_y, sim_target_a, sim_skew, sim_latency;
+	private SimDouble sim_tshort, sim_tlong, sim_thor, sim_tvert;
 	private SimInt sim_pipeline;
 	private SimEnum sim_cammode;
 	private SimEnum sim_led_mode;
@@ -25,7 +26,14 @@ class LimelightSimulator {
 			sim_target_x = sim_device.createDouble("target_x", SimDevice.Direction.kInput, 0.0);
 			sim_target_y = sim_device.createDouble("target_y", SimDevice.Direction.kInput, 0.0);
 			sim_target_a = sim_device.createDouble("target_a", SimDevice.Direction.kInput, 0.0);
+			sim_skew = sim_device.createDouble("skew", SimDevice.Direction.kInput, 0.0);
+			sim_latency = sim_device.createDouble("latency", SimDevice.Direction.kInput, 0.0);
 
+			sim_tshort = sim_device.createDouble("short_side", SimDevice.Direction.kInput, 0.0);
+			sim_tlong = sim_device.createDouble("long_side", SimDevice.Direction.kInput, 0.0);
+			sim_thor
+				= sim_device.createDouble("horizontal_length", SimDevice.Direction.kInput, 0.0);
+			sim_tvert = sim_device.createDouble("vertical_length", SimDevice.Direction.kInput, 0.0);
 			sim_pipeline = sim_device.createInt("pipeline", SimDevice.Direction.kOutput, 0);
 
 			String cammode_str[] = new String[2];
@@ -76,6 +84,30 @@ class LimelightSimulator {
 
 	public double get_target_a() {
 		return sim_target_a.get();
+	}
+
+	public double get_skew() {
+		return sim_skew.get();
+	}
+
+	public double get_latency() {
+		return sim_latency.get();
+	}
+
+	public double get_short_side() {
+		return sim_tshort.get();
+	}
+
+	public double get_long_side() {
+		return sim_tlong.get();
+	}
+
+	public double get_horizontal_length() {
+		return sim_thor.get();
+	}
+
+	public double get_vertical_length() {
+		return sim_tvert.get();
 	}
 
 	public int get_pipeline() {
