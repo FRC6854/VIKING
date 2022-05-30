@@ -79,6 +79,48 @@ public class Limelight {
 		return limelight_comm.get_entry_double("ta");
 	}
 
+	public double skewOrRotation() {
+		if (limelight_simulator.is_simulation()) {
+			return limelight_simulator.get_skew();
+		}
+		return limelight_comm.get_entry_double("ts");
+	}
+
+	public double latencyContribution() {
+		if (limelight_simulator.is_simulation()) {
+			return limelight_simulator.get_latency();
+		}
+		return limelight_comm.get_entry_double("tl");
+	}
+
+	public double shortSideLength() {
+		if (limelight_simulator.is_simulation()) {
+			return limelight_simulator.get_short_side();
+		}
+		return limelight_comm.get_entry_double("tshort");
+	}
+
+	public double longSideLength() {
+		if (limelight_simulator.is_simulation()) {
+			return limelight_simulator.get_long_side();
+		}
+		return limelight_comm.get_entry_double("tlong");
+	}
+
+	public double horizontalSideLengh() {
+		if (limelight_simulator.is_simulation()) {
+			return limelight_simulator.get_horizontal_length();
+		}
+		return limelight_comm.get_entry_double("thor");
+	}
+
+	public double verticalSideLength() {
+		if (limelight_simulator.is_simulation()) {
+			return limelight_simulator.get_vertical_length();
+		}
+		return limelight_comm.get_entry_double("tvert");
+	}
+
 	/**
 	 * True active pipeline index of the camera (0 .. 9)
 	 * @return active pipeline currently used by the Limelight
