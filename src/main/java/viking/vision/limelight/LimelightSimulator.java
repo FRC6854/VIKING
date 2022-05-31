@@ -15,6 +15,8 @@ class LimelightSimulator {
 	private SimInt sim_pipeline;
 	private SimEnum sim_cammode;
 	private SimEnum sim_led_mode;
+	private SimEnum sim_stream;
+	private SimEnum sim_snapshot;
 
 	private static int instance_count = 0;
 
@@ -49,6 +51,19 @@ class LimelightSimulator {
 			ledmode_str[3] = "On";
 			sim_led_mode
 				= sim_device.createEnum("led_mode", SimDevice.Direction.kOutput, ledmode_str, 0);
+
+			String stream_str[] = new String[3];
+			stream_str[0] = "Standard";
+			stream_str[1] = "PiP Main";
+			stream_str[2] = "PiP Secondary";
+			sim_stream = sim_device.createEnum("streaming mode", SimDevice.Direction.kOutput,
+											   stream_str, 0);
+
+			String snapshot_str[] = new String[2];
+			snapshot_str[0] = "Reset snapshot";
+			snapshot_str[1] = "Take one snapshot";
+			sim_snapshot
+				= sim_device.createEnum("snapshot", SimDevice.Direction.kOutput, snapshot_str, 0);
 		}
 	}
 
@@ -128,5 +143,13 @@ class LimelightSimulator {
 
 	public void set_led_mode(int ledmode) {
 		sim_led_mode.set(ledmode);
+	}
+
+	public void set_stream(int stream) {
+		sim_stream.set(stream);
+	}
+
+	public void set_snapshot(int snapshot) {
+		sim_snapshot.set(snapshot);
 	}
 }
