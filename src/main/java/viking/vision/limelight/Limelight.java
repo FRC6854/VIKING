@@ -6,6 +6,8 @@ public class Limelight {
 	private LimelightSimulator limelight_simulator = null;
 
 	public static enum LightMode { DEFAULT, OFF, BLINK, ON }
+	public static enum StreamMode { Standard, PiPMain, PiPSecondary }
+	public static enum SnapshotMode { Reset, TakeSnapshot }
 
 	private double cameraHeight = 0; // Unit in meters
 	private double cameraAngle = 0; // Unit in degrees
@@ -200,6 +202,43 @@ public class Limelight {
 			return;
 		}
 		limelight_comm.set_entry_number("pipeline", pipelineID);
+	}
+
+	public void setStreamMode(StreamMode stream_mode) {
+		int mode_n = 0;
+		switch (stream_mode) {
+		case Standard:
+			mode_n = 0;
+			break;
+		case PiPMain:
+			mode_n = 1;
+			break;
+		case PiPSecondary:
+			mode_n = 2;
+			break;
+		}
+		if (limelight_simulator.is_simulation()) {
+			limelight_simulator.set_stream(mode_n);
+			return;
+		}
+		limelight_comm.set_entry_number("stream", mode_n);
+	}
+
+	public void setSnapshot(SnapshotMode snapshot_mode) {
+		int mode_n = 0;
+		switch (snapshot_mode) {
+		case Reset:
+			mode_n = 0;
+			break;
+		case TakeSnapshot:
+			mode_n = 1;
+			break;
+		}
+		if (limelight_simulator.is_simulation()) {
+			limelight_simulator.set_snapshot(mode_n);
+			return;
+		}
+		limelight_comm.set_entry_number("snapshot", mode_n);
 	}
 
 	/**
