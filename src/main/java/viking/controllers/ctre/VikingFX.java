@@ -10,8 +10,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 public class VikingFX extends WPI_TalonFX {
 
 	/**
-	 * Constructor for VikingSRX without encoder
-	 * @param id the CAN ID for the Talon SRX
+	 * Constructor for VikingFX without encoder
+	 * @param id the CAN ID for the Talon FX
 	 * @param inverted is the motor inverted
 	 */
 	public VikingFX(int id, boolean inverted) {
@@ -25,8 +25,8 @@ public class VikingFX extends WPI_TalonFX {
 	}
 
 	/**
-	 * Full constructor for VikingSRX
-	 * @param id the CAN ID for the Talon SRX
+	 * Full constructor for VikingFX
+	 * @param id the CAN ID for the Talon FX
 	 * @param inverted is the motor inverted
 	 * @param sensorPhase should the encoder be inverted
 	 * @param device the type of encoder
