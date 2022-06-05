@@ -27,6 +27,20 @@ class LimelightComm {
 			.getNumber(0);
 	}
 
+	public double[] get_entry_double_array(String entry_name) {
+		return NetworkTableInstance.getDefault()
+			.getTable(networktable_name)
+			.getEntry(entry_name)
+			.getDoubleArray(new double[0]);
+	}
+
+	public Number[] get_entry_number_array(String entry_name) {
+		return NetworkTableInstance.getDefault()
+			.getTable(networktable_name)
+			.getEntry(entry_name)
+			.getNumberArray(new Number[0]);
+	}
+
 	public void set_entry_double(String entry_name, double value) {
 		NetworkTableInstance.getDefault()
 			.getTable(networktable_name)
@@ -39,5 +53,19 @@ class LimelightComm {
 			.getTable(networktable_name)
 			.getEntry(entry_name)
 			.setNumber(value);
+	}
+
+	public void set_entry_double_array(String entry_name, double[] array) {
+		NetworkTableInstance.getDefault()
+			.getTable(networktable_name)
+			.getEntry(entry_name)
+			.setDoubleArray(array);
+	}
+
+	public void set_entry_number_array(String entry_name, Number[] array) {
+		NetworkTableInstance.getDefault()
+			.getTable(networktable_name)
+			.getEntry(entry_name)
+			.getNumberArray(new Number[0]);
 	}
 }
