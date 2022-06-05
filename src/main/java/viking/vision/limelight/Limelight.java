@@ -81,6 +81,9 @@ public class Limelight {
 		return limelight_comm.get_entry_double("ta");
 	}
 
+	/**
+	 * Skew or Rotation
+	 */
 	public double skewOrRotation() {
 		if (limelight_simulator.is_simulation()) {
 			return limelight_simulator.get_skew();
@@ -88,6 +91,9 @@ public class Limelight {
 		return limelight_comm.get_entry_double("ts");
 	}
 
+	/**
+	 * The pipeline’s latency contribution
+	 */
 	public double latencyContribution() {
 		if (limelight_simulator.is_simulation()) {
 			return limelight_simulator.get_latency();
@@ -95,6 +101,10 @@ public class Limelight {
 		return limelight_comm.get_entry_double("tl");
 	}
 
+	/**
+	 * Sidelength of shortest side of the fitted bounding box
+	 * @return Length in pixels
+	 */
 	public double shortSideLength() {
 		if (limelight_simulator.is_simulation()) {
 			return limelight_simulator.get_short_side();
@@ -102,6 +112,10 @@ public class Limelight {
 		return limelight_comm.get_entry_double("tshort");
 	}
 
+	/**
+	 * Sidelength of longest side of the fitted bounding box
+	 * @return Length in pixels
+	 */
 	public double longSideLength() {
 		if (limelight_simulator.is_simulation()) {
 			return limelight_simulator.get_long_side();
@@ -109,6 +123,10 @@ public class Limelight {
 		return limelight_comm.get_entry_double("tlong");
 	}
 
+	/**
+	 * Horizontal sidelength of the rough bounding box
+	 * @return Length in pixels
+	 */
 	public double horizontalSideLengh() {
 		if (limelight_simulator.is_simulation()) {
 			return limelight_simulator.get_horizontal_length();
@@ -116,6 +134,10 @@ public class Limelight {
 		return limelight_comm.get_entry_double("thor");
 	}
 
+	/**
+	 * Vertical sidelength of the rough bounding box
+	 * @return Length in pixels
+	 */
 	public double verticalSideLength() {
 		if (limelight_simulator.is_simulation()) {
 			return limelight_simulator.get_vertical_length();
@@ -204,6 +226,10 @@ public class Limelight {
 		limelight_comm.set_entry_number("pipeline", pipelineID);
 	}
 
+	/**
+	 * Sets limelight’s streaming mode
+	 * @param stream_mode Streaming mode Standard, PiPMain, PiPSecondary
+	 */
 	public void setStreamMode(StreamMode stream_mode) {
 		int mode_n = 0;
 		switch (stream_mode) {
@@ -224,6 +250,10 @@ public class Limelight {
 		limelight_comm.set_entry_number("stream", mode_n);
 	}
 
+	/**
+	 * Take snapshot during match
+	 * @param snapshot_mode Snapshot operation Reset, TakeSnapshot
+	 */
 	public void setSnapshot(SnapshotMode snapshot_mode) {
 		int mode_n = 0;
 		switch (snapshot_mode) {
