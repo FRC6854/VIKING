@@ -17,7 +17,6 @@ public class VikingFX extends WPI_TalonFX {
 	public VikingFX(int id, boolean inverted) {
 		super(id);
 		configAllSettings(new TalonFXConfiguration());
-		//configFactoryDefault();
 		setNeutralMode(NeutralMode.Brake);
 		setSafetyEnabled(false);
 		setInverted(inverted);
@@ -29,7 +28,6 @@ public class VikingFX extends WPI_TalonFX {
 	 * @param id the CAN ID for the Talon FX
 	 * @param inverted is the motor inverted
 	 * @param sensorPhase should the encoder be inverted
-	 * @param device the type of encoder
 	 * @param kF the F variable of PIDF
 	 * @param kP the P variable of PIDF
 	 * @param kI the I variable of PIDF
@@ -37,22 +35,19 @@ public class VikingFX extends WPI_TalonFX {
 	 * @param velocity the max velocity for Motion Magic
 	 * @param acceleration the max acceleration for Motion Magic
 	 */
-	public VikingFX(int id, boolean inverted, boolean sensorPhase, FeedbackDevice device,
+	public VikingFX(int id, boolean inverted, boolean sensorPhase,
 					 double kF, double kP, double kI, double kD, double velocity,
 					 double acceleration) {
 
 		super(id);
 		
 		configAllSettings(new TalonFXConfiguration());
-		//configFactoryDefault();
 
 		// Invert Power
 		setInverted(inverted);
 
 		// Invert Encoder
 		setSensorPhase(sensorPhase);
-
-		configSelectedFeedbackSensor(device, 0, 0);
 
 		// Set-up PIDF[0]
 		selectProfileSlot(0, 0);
