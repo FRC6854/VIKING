@@ -1,6 +1,6 @@
 package viking.math;
 
-public class gearConversion {
+public class GearConversion {
     /**
      * Calculates motor rotation given wheel rotation and gear ratio 
      * @param wheelRotation
