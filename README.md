@@ -12,6 +12,11 @@ The JitPack is based off of FRC 1540s library ROOSTER and you can go check it ou
 
 Includes support for XBox One Controller with pre-made inverts for proper values.
 
+### Gear Conversion 
+`viking.math.GearConversion`
+
+Converts motor rotation to wheel rotation (or vice versa) given gear ratios.
+
 ### CSV Reader
 `viking.logging.CSVReader`
 
