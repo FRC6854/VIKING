@@ -34,7 +34,7 @@ public class General {
 	 * @param hyp
 	 * @return
 	 */
-	public double findy(double theta, double hyp) {
+	public static double findy(double theta, double hyp) {
 		return hyp * (Math.cos(Math.toRadians(theta)));
 	}
 

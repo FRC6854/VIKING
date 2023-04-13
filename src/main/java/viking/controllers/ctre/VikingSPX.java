@@ -2,9 +2,9 @@ package viking.controllers.ctre;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-public class VikingSPX extends WPI_VictorSPX {
+public class VikingSPX extends VictorSPX {
 
 	/**
 	 * @param id the CAN ID for the Victor SPX
@@ -16,7 +16,6 @@ public class VikingSPX extends WPI_VictorSPX {
 
 		configFactoryDefault();
 		setNeutralMode(NeutralMode.Brake);
-		setSafetyEnabled(false);
 		setInverted(inverted);
 	}
 
@@ -32,7 +31,6 @@ public class VikingSPX extends WPI_VictorSPX {
 		configFactoryDefault();
 		setNeutralMode(NeutralMode.Brake);
 		follow(master);
-		setSafetyEnabled(false);
 		setInverted(inverted);
 	}
 

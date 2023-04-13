@@ -9,8 +9,6 @@ public class Vector {
 	public double x;
 	public double y;
 
-	private static General genmath = new General();
-
 	public Vector(Vector vec) {
 		direction = vec.direction;
 		magnitude = vec.magnitude;
@@ -23,13 +21,13 @@ public class Vector {
 		if (cartesian == false) {
 			direction = dir_x;
 			magnitude = mag_y;
-			x = genmath.findx(direction, magnitude);
-			y = genmath.findy(direction, magnitude);
+			x = General.findx(direction, magnitude);
+			y = General.findy(direction, magnitude);
 		} else {
 			x = dir_x;
 			y = mag_y;
 			direction = vectorDir(x, y);
-			magnitude = genmath.hyplength(x, y);
+			magnitude = General.hyplength(x, y);
 		}
 	}
 
@@ -41,7 +39,7 @@ public class Vector {
 	 */
 	private double vectorDir(double x, double y) {
 		//"Normalizes" y by setting it to be within the boundaries of a unit circle
-		y = (y * (1 / genmath.hyplength(x, y)));
+		y = (y * (1 / General.hyplength(x, y)));
 
 		// angle of the point (0-360)
 		double deg0 = Math.floor((Math.toDegrees(Math.acos(y))) * 100) / 100; // acos

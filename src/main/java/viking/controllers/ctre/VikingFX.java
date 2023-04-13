@@ -3,9 +3,9 @@ package viking.controllers.ctre;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
-public class VikingFX extends WPI_TalonFX {
+public class VikingFX extends TalonFX {
 
 	/**
 	 * Constructor for VikingFX without encoder
@@ -16,9 +16,7 @@ public class VikingFX extends WPI_TalonFX {
 		super(id);
 		configAllSettings(new TalonFXConfiguration());
 		setNeutralMode(NeutralMode.Brake);
-		setSafetyEnabled(false);
 		setInverted(inverted);
-
 	}
 
 	/**

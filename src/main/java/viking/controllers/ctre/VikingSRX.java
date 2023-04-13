@@ -3,9 +3,9 @@ package viking.controllers.ctre;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-public class VikingSRX extends WPI_TalonSRX {
+public class VikingSRX extends TalonSRX {
 
 	/**
 	 * Constructor for VikingSRX without encoder
@@ -16,7 +16,6 @@ public class VikingSRX extends WPI_TalonSRX {
 		super(id);
 		configFactoryDefault();
 		setNeutralMode(NeutralMode.Brake);
-		setSafetyEnabled(false);
 		setInverted(inverted);
 	}
 
